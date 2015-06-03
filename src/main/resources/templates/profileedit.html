@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>LetsDig: Main Menu</title>
+</head>
+
+<body>
+<header>
+    <h1><img id="mainlogo" src="/img/letsdig_logo.jpg"/>LetsDig</h1>
+</header>
+<main class="centered">
+    <p id="greeting">Updating profile for <span class="displayName" th:text="${displayName}">User</span></p>
+    <form class="indoors" method="post" action="profileedit.html">
+        <fieldset>
+            <div class="form-group">
+                <input class="form-control" name="username" placeholder="Username" type="text" autofocus="true"/>
+                <input class="form-control" name="firstName" placeholder="First name" type="text"/>
+                <input class="form-control" name="lastName" placeholder="Last name" type="text"/>
+                <button type="submit">Submit</button><button type="cancel">Cancel</button>
+            </div>
+        </fieldset>
+    </form>
+</main>
+</body>
+</html>
