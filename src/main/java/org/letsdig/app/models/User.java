@@ -1,5 +1,7 @@
 package org.letsdig.app.models;
 
+import org.letsdig.app.models.util.PasswordHash;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,9 +20,9 @@ public class User extends AbstractLetsDigEntity {
     private String firstName;
     private String lastName;
 
-    public User(String username, String hash) {
+    public User(String username, String password) {
         this.username = username;
-        this.hash = hash;
+        this.hash = PasswordHash.getHash(password);
         this.firstName = null;
         this.lastName = null;
     }
@@ -71,9 +73,8 @@ public class User extends AbstractLetsDigEntity {
         return this.firstName + " " + this.lastName;
     }
 
-    public String getDisplayName() {
-        String displayName = (this.getFirstName().equals(null)) ? this.getUsername() : this.getFirstName();
-        return displayName;
+    public String gimmeDisplayName() {
+        return (this.getFirstName() == null) ? this.getUsername() : this.getFirstName();
     }
 
 }

@@ -29,12 +29,8 @@ public class AuthenticationController extends AbstractLetsDigController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String register(String username, String password, String confirmPassword, HttpServletRequest request, Model model) {
 
-        System.out.println("In register at 1");
-
         // check if the username is taken
         User existingUser = userDao.findByUsername(username);
-
-        System.out.println("In register at 2");
 
         if (existingUser != null) {
 
@@ -55,10 +51,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         request.getSession().setAttribute(userSessionKey, newUser.getUid());
 
         // Store user's name
-        String displayName = newUser.getUsername();
-        model.addAttribute("displayName", displayName);
-
-        System.out.println("In register at 3");
+        model.addAttribute("displayName", newUser.gimmeDisplayName());
 
         // display login landing page
         return "redirect:home";
@@ -77,19 +70,24 @@ public class AuthenticationController extends AbstractLetsDigController {
 
         // verify that the db returned a user; if not, display error
         if (existingUser == null) {
-            return this.displayError("Invalid username.", model);
+
+            // return this.displayError("Invalid username.", model);
+
+            model.addAttribute("message", "Invalid username.");
+            return "error";
 
         // verify that user entered valid password; if not, display error
         } else if (!PasswordHash.isValidPassword(password, existingUser.getHash())) {
-            return this.displayError("Invalid password.", model);
+            //return this.displayError("Invalid password.", model);
+            model.addAttribute("message", "Invalid password");
+            return "error";
         }
 
         // User and password are verified, so log the user into the session
         request.getSession().setAttribute(userSessionKey, existingUser.getUid());
 
         // Store user's name
-        String displayName = existingUser.getUsername();
-        model.addAttribute("displayName", displayName);
+        model.addAttribute("displayName", existingUser.gimmeDisplayName());
 
         // display login landing page
         return "redirect:home";

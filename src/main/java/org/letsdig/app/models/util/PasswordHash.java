@@ -11,18 +11,21 @@ import java.security.NoSuchAlgorithmException;
  */
 public class PasswordHash {
 
-    private static final String salt = "M_8E}'F8FX?CqxL_";
+    private static final String salt = "1a2b";
 
     public static String getHash(String password) {
 
         // Confirm password data is present
-        if (password == null) {
-            return null;
-        }
+//        if (password == null) {
+  //          return null;
+    //    }
 
-        // Create one-way hash of password
+        // Create a one-way hash of password
+
         String hash = null;
         String saltedPassword = applySalt(password);
+
+        if(null == password) return null;
 
         try {
             // Create MessageDigest object for MD5

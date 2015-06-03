@@ -24,6 +24,7 @@ public class NavigationController extends AbstractLetsDigController {
         User user = getUserFromSession(request);
 
         // put the data into the model
+        model.addAttribute("displayName", user.gimmeDisplayName());
         model.addAttribute("username", user.getUsername());
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
