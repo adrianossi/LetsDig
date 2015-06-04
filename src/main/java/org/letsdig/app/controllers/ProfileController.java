@@ -40,6 +40,14 @@ public class ProfileController extends AbstractLetsDigController {
             model.addAttribute("lastName", "empty");
         }
 
+        if (user.gimmeLocation() != null) {
+            model.addAttribute("latitude", user.getLatitude());
+            model.addAttribute("longitude", user.getLongitude());
+        } else {
+            model.addAttribute("latitude", "empty");
+            model.addAttribute("longitude", "empty");
+        }
+
         // display the profile template
         return "profile";
     }
@@ -55,15 +63,22 @@ public class ProfileController extends AbstractLetsDigController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
+        model.addAttribute("latitude", user.getLatitude());
+        model.addAttribute("longitude", user.getLongitude());
 
         // display the profileedit template
         return "profileedit";
     }
 
     @RequestMapping(value = "/profileedit", method = RequestMethod.POST)
-    public String profileEdit(String username, String firstName, String lastName, HttpServletRequest request, Model model) {
-        // username, firstName, lastName,
-        // newPassword, newPasswordConfirm, request, model
+    public String profileEdit(
+            String username,
+            String firstName,
+            String lastName,
+            String latitude,
+            String longitude,
+            HttpServletRequest request,
+            Model model) {
 
         // get user's data from db
         User user = getUserFromSession(request);
@@ -79,6 +94,15 @@ public class ProfileController extends AbstractLetsDigController {
         if (lastName != "" && !lastName.equals(user.getLastName())) {
             user.setLastName(lastName);
         }
+
+        if (latitude != "" && Double.valueOf(latitude) != user.getLatitude()) {
+            user.setLatitude(Double.valueOf(latitude));
+        }
+
+        if (longitude != "" && Double.valueOf(longitude) != user.getLongitude()) {
+            user.setLongitude(Double.valueOf(longitude));
+        }
+
 /*
         if (newPassword.equals(null)) {
             model.addAttribute("passwordmessage", "(hidden)");
@@ -96,6 +120,8 @@ public class ProfileController extends AbstractLetsDigController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
+        model.addAttribute("latitude", user.getLatitude());
+        model.addAttribute("longitude", user.getLongitude());
 
         // display the profile template
         return "profile";

@@ -11,12 +11,12 @@
 <header th:replace="template :: header-foyer"></header>
 
 <main class="centered">
-    <h3>User profile</h3>
+    <h3>User profile</h3> (<a href="profileedit.html">edit</a>)
     <p>Username: <span th:text="${username}">empty</span></p>
     <p>First Name: <span th:text="${firstName}">empty</span></p>
     <p>Last Name: <span th:text="${lastName}">empty</span></p>
-    <p>Password: <span th:text="${passwordmessage}">on file</span></p>
-    <a href="profileedit.html">Edit profile</a>
+    <p>Latitude: <span th:text="${latitude}">empty</span></p>
+    <p>Longitude: <span th:text="${longitude}">empty</span></p>
 </main>
 
 <footer th:replace="template :: footer-auth"></footer>
