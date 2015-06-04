@@ -8,8 +8,7 @@
 </head>
 
 <body>
-<header>
-    <h1><img src="/img/letsdig_logo.jpg"/>LetsDig</h1>
+<header th:replace="template :: header-foyer">
 </header>
 
 <main class="centered">
@@ -27,11 +26,10 @@
         </fieldset>
     </form>
 
-    <nav class="bottom"><a href="profileedit.html">Edit Profile</a> | <a href="/settings">Settings</a> | <a href="/logout">Logout</a></nav>
+    <nav class="bottom"><a href="profile.html">View Profile</a> | <a href="/settings">Settings</a> | </nav>
 </main>
 
-<footer>
-
+<footer th:replace="template :: footer-auth">
 </footer>
 
 </body>

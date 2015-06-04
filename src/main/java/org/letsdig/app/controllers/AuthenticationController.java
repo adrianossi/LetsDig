@@ -22,7 +22,8 @@ public class AuthenticationController extends AbstractLetsDigController {
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("title", "Create account");
         return "register";
     }
 
@@ -58,7 +59,8 @@ public class AuthenticationController extends AbstractLetsDigController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("title", "Login");
         return "login";
     }
 
@@ -96,7 +98,7 @@ public class AuthenticationController extends AbstractLetsDigController {
     @RequestMapping(value = "/logout")
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "login";
+        return "redirect:login";
     }
 
 }

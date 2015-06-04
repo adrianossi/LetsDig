@@ -15,7 +15,34 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 @Controller
-public class NavigationController extends AbstractLetsDigController {
+public class ProfileController extends AbstractLetsDigController {
+
+    @RequestMapping(value = "/profile")
+    public String profile(HttpServletRequest request, Model model) {
+
+        // get user's data from db
+        User user = getUserFromSession(request);
+
+        // add new info to model
+        model.addAttribute("username", user.getUsername());
+
+        model.addAttribute("displayName", user.gimmeDisplayName());
+
+        if (user.getFirstName() != null) {
+            model.addAttribute("firstName", user.getFirstName());
+        } else {
+            model.addAttribute("firstName", "empty");
+        }
+
+        if (user.getLastName() != null) {
+            model.addAttribute("lastName", user.getLastName());
+        } else {
+            model.addAttribute("lastName", "empty");
+        }
+
+        // display the profile template
+        return "profile";
+    }
 
     @RequestMapping(value = "/profileedit", method = RequestMethod.GET)
     public String profileEdit(HttpServletRequest request, Model model) {
@@ -34,25 +61,25 @@ public class NavigationController extends AbstractLetsDigController {
     }
 
     @RequestMapping(value = "/profileedit", method = RequestMethod.POST)
-    public String profileEdit(String username, String firstName, String lastName, String newPassword, String newPasswordConfirm, HttpServletRequest request, Model model) {
+    public String profileEdit(String username, String firstName, String lastName, HttpServletRequest request, Model model) {
         // username, firstName, lastName,
         // newPassword, newPasswordConfirm, request, model
 
         // get user's data from db
         User user = getUserFromSession(request);
         
-        if (!username.equals(user.getUsername())) {
+        if (username != "" && !username.equals(user.getUsername())) {
             user.setUsername(username);
         }
 
-        if (!firstName.equals(user.getFirstName())) {
+        if (firstName != "" && !firstName.equals(user.getFirstName())) {
             user.setFirstName(firstName);
         }
 
-        if (!lastName.equals(user.getLastName())) {
+        if (lastName != "" && !lastName.equals(user.getLastName())) {
             user.setLastName(lastName);
         }
-
+/*
         if (newPassword.equals(null)) {
             model.addAttribute("passwordmessage", "(hidden)");
         } else if (!newPassword.equals(newPasswordConfirm)) {
@@ -61,7 +88,7 @@ public class NavigationController extends AbstractLetsDigController {
             user.setHash(PasswordHash.getHash(newPassword));
             model.addAttribute("passwordmessage", "Password updated");
         }
-
+*/
         // save updated user data to db
         userDao.save(user);
 

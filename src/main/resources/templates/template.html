@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head lang="en" th:fragment="head-frontdoor">
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>LetsDig: The Archaeology App</title>
+</head>
+
+<body>
+
+<!-- Header for non-authenticated visitors -->
+    <header th:fragment="header-frontdoor">
+        <h1><img id="mainlogo" src="/img/letsdig_logo.jpg"/>LetsDig</h1>
+    </header>
+
+<!-- Header for authenticated visitors in entry pages -->
+    <header class="header-foyer" th:fragment="header-foyer">
+        <ul class="usermenu">
+            <li>LetsDig User</li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+        <p class="foyer-wordmark"><a href="home.html"><img src="/img/letsdig_logo_300px.jpg"/><h1>LetsDig</h1></a></p>
+    </header>
+
+<!-- Header for authenticated visitors in working pages-->
+    <header class="header-workroom" th:fragment="header-workroom">
+        <p class="workroom-wordmark"><a href="home.html"><img src="/img/letsdig_logo_300px.jpg"/><h1>LetsDig</h1></a></p>
+        <ul class="usermenu">
+            <li th:replace="${displayName}">LetsDig User</li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+    </header>
+
+<!-- Footer for non-authenticated users -->
+    <footer th:fragment="footer-nonauth">
+        <p>Copyright A. Ossi</p>
+    </footer>
+
+<!-- Footer for authenticated users -->
+    <footer th:fragment="footer-auth">
+        <p><a href="/logout">Logout</a></p>
+        <p>Copyright A. Ossi</p>
+    </footer>
+
+</body>
+</html>

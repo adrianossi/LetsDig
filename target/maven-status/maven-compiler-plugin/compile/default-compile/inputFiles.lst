@@ -3,7 +3,7 @@
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/AbstractLetsDigEntity.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/AbstractLetsDigController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/AuthenticationController.java
-/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/NavigationController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/LetsDigApplication.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/UserDao.java
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/ProfileController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/AuthenticationInterceptor.java

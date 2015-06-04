@@ -1,3 +1,20 @@
+/* LetsDig stylesheet */
+
+a {
+    color: #336699;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #7094B8;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #14293D;
+    text-decoration: none;
+}
+
 .frontdoor input {
     display: block;
     margin-left: auto;
@@ -55,6 +72,17 @@ body header {
     text-align: center;
 }
 
+.header-foyer ul li {
+    list-style: none;
+    display: inline;
+    padding-right: .3em;
+    margin-bottom: .3em;
+}
+
+.header-foyer img {
+    height: 1em;
+}
+
 header h1 {
     font-size: 3em;
 }
@@ -76,4 +104,24 @@ header h2 {
 
 nav.bottom {
     display: block;
+}
+
+footer {
+    text-align: center;
+}
+
+#moreinfo {
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+    width: 30%;
+}
+
+form.frontdoor {
+    display: inline-block;
+    width: 30%;
+}
+
+main.frontdoor {
+    width: 70%;
 }
