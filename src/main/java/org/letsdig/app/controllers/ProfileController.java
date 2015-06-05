@@ -17,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ProfileController extends AbstractLetsDigController {
 
+    // static proerties for map redirect
+    private static final String baseGoogleMapsUrl = "https://www.google.com/maps/?q=";
+    //private static final String googleZoomLevel = ",8z";
+
     @RequestMapping(value = "/profile")
     public String profile(HttpServletRequest request, Model model) {
 
@@ -48,8 +52,24 @@ public class ProfileController extends AbstractLetsDigController {
             model.addAttribute("longitude", "empty");
         }
 
-        // display the profile template
         return "profile";
+    }
+
+    /*
+        @RequestMapping(value = "/redirect", method = RequestMethod.GET)
+        public void method(HttpServletResponse httpServletResponse) {
+            httpServletResponse.setHeader("Location", projectUrl);
+        }
+    */
+    // display the profile template
+
+    @RequestMapping(value = "/map")
+    public String map(HttpServletRequest request) {
+
+        // get user's data from db
+        User user = getUserFromSession(request);
+
+        return "redirect:" + baseGoogleMapsUrl + user.getLatitude() + "," + user.getLongitude();
     }
 
     @RequestMapping(value = "/profileedit", method = RequestMethod.GET)
