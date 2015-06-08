@@ -2,10 +2,10 @@ package org.letsdig.app.models;
 
 import org.letsdig.app.models.util.PasswordHash;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrian on 6/1/15.
@@ -19,16 +19,16 @@ public class User extends AbstractLetsDigEntity {
     private String hash;
     private String firstName;
     private String lastName;
-    private double latitude;
-    private double longitude;
+    private LatLong location;
+    private List<Project> projects;
 
     public User(String username, String password) {
         this.username = username;
         this.hash = PasswordHash.getHash(password);
         this.firstName = null;
         this.lastName = null;
-        this.latitude = 0.0;
-        this.longitude = 0.0;
+        this.location = null;
+        this.projects = new ArrayList<Project>();
     }
 
     // Empty constructor for Spring to use
@@ -72,6 +72,25 @@ public class User extends AbstractLetsDigEntity {
         this.hash = hash;
     }
 
+    @ManyToOne
+    public LatLong getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLong location) {
+        this.location = location;
+    }
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "director_id")
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
     @Override
     public String toString() {
         return this.firstName + " " + this.lastName;
@@ -79,28 +98,6 @@ public class User extends AbstractLetsDigEntity {
 
     public String gimmeDisplayName() {
         return (this.getFirstName() == null) ? this.getUsername() : this.getFirstName();
-    }
-
-    @Column(name = "latitude")
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    @Column(name = "longitude")
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public String gimmeLocation() {
-        return this.getLatitude() + ", " + this.getLongitude();
     }
 
 }

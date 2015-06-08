@@ -1,6 +1,8 @@
 package org.letsdig.app.controllers;
 
 import org.letsdig.app.models.User;
+import org.letsdig.app.models.dao.LatLongDao;
+import org.letsdig.app.models.dao.ProjectDao;
 import org.letsdig.app.models.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -14,6 +16,12 @@ public abstract class AbstractLetsDigController {
 
     @Autowired
     protected UserDao userDao;
+
+    @Autowired
+    protected LatLongDao latLongDao;
+
+    @Autowired
+    protected ProjectDao projectDao;
 
     // static properties for error display
     private static final String errorTemplateIdentifier = "error";

@@ -1,6 +1,8 @@
 package org.letsdig.app.controllers;
 
+import org.letsdig.app.models.LatLong;
 import org.letsdig.app.models.User;
+import org.letsdig.app.models.dao.LatLongDao;
 import org.letsdig.app.models.dao.UserDao;
 import org.letsdig.app.models.util.PasswordHash;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ProfileController extends AbstractLetsDigController {
-
-    // static proerties for map redirect
-    private static final String baseGoogleMapsUrl = "https://www.google.com/maps/?q=";
-    //private static final String googleZoomLevel = ",8z";
 
     @RequestMapping(value = "/profile")
     public String profile(HttpServletRequest request, Model model) {
@@ -44,32 +42,25 @@ public class ProfileController extends AbstractLetsDigController {
             model.addAttribute("lastName", "empty");
         }
 
-        if (user.gimmeLocation() != null) {
-            model.addAttribute("latitude", user.getLatitude());
-            model.addAttribute("longitude", user.getLongitude());
+        if (user.getLocation() != null) {
+            model.addAttribute("latitude", user.getLocation().getLatitude());
+            model.addAttribute("longitude", user.getLocation().getLongitude());
         } else {
             model.addAttribute("latitude", "empty");
             model.addAttribute("longitude", "empty");
         }
 
+            /*
+            LatLong location = latLongDao.findByUid(user.getLocationId());
+            model.addAttribute("latitude", location.getLatitude());
+            model.addAttribute("longitude", location.getLongitude());
+        } else {
+            model.addAttribute("latitude", "empty");
+            model.addAttribute("longitude", "empty");
+        }*/
+
+        // display the profile template
         return "profile";
-    }
-
-    /*
-        @RequestMapping(value = "/redirect", method = RequestMethod.GET)
-        public void method(HttpServletResponse httpServletResponse) {
-            httpServletResponse.setHeader("Location", projectUrl);
-        }
-    */
-    // display the profile template
-
-    @RequestMapping(value = "/map")
-    public String map(HttpServletRequest request) {
-
-        // get user's data from db
-        User user = getUserFromSession(request);
-
-        return "redirect:" + baseGoogleMapsUrl + user.getLatitude() + "," + user.getLongitude();
     }
 
     @RequestMapping(value = "/profileedit", method = RequestMethod.GET)
@@ -83,8 +74,18 @@ public class ProfileController extends AbstractLetsDigController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
-        model.addAttribute("latitude", user.getLatitude());
-        model.addAttribute("longitude", user.getLongitude());
+
+        // TODO add location to profile edit display
+
+        /*
+        if (user.getLocationId() != 0) {
+            LatLong location = latLongDao.findByUid(user.getLocationId());
+            model.addAttribute("latitude", location.getLatitude());
+            model.addAttribute("longitude", location.getLongitude());
+        } else {
+            model.addAttribute("latitude", "empty");
+            model.addAttribute("longitude", "empty");
+        }*/
 
         // display the profileedit template
         return "profileedit";
@@ -103,6 +104,7 @@ public class ProfileController extends AbstractLetsDigController {
         // get user's data from db
         User user = getUserFromSession(request);
         
+        // check each field for user input; if empty-->skip, else-->set
         if (username != "" && !username.equals(user.getUsername())) {
             user.setUsername(username);
         }
@@ -115,13 +117,40 @@ public class ProfileController extends AbstractLetsDigController {
             user.setLastName(lastName);
         }
 
-        if (latitude != "" && Double.valueOf(latitude) != user.getLatitude()) {
+        if (latitude != "" && user.getLocation().getLatitude() != Double.valueOf(latitude)) {
+            user.getLocation().setLatitude(Double.valueOf(latitude));
+        }
+
+        if (longitude != "" && user.getLocation().getLongitude() != Double.valueOf(longitude)) {
+            user.getLocation().setLongitude(Double.valueOf(longitude));
+        }
+
+        /*
+        if (latitude != "" || longitude != "") {
+            LatLong location = latLongDao.findByUid(user.getLocationId());
+            if (location != null) {
+                location.setLatitude(Double.valueOf(latitude));
+                location.setLongitude(Double.valueOf(longitude));
+                latLongDao.save(location);
+                model.addAttribute("latitude", location.getLatitude());
+                model.addAttribute("longitude", location.getLongitude());
+            } else {
+                location = new LatLong(Double.valueOf(latitude), Double.valueOf(longitude));
+                latLongDao.save(location);
+                user.setLocationId(location.getUid());
+                model.addAttribute("latitude", location.getLatitude());
+                model.addAttribute("longitude", location.getLongitude());
+            }
+        }*/
+
+        /* OLD LAT/LONG UPDATER
+        && Double.valueOf(latitude) != location.getLatitude()) {
             user.setLatitude(Double.valueOf(latitude));
         }
 
         if (longitude != "" && Double.valueOf(longitude) != user.getLongitude()) {
             user.setLongitude(Double.valueOf(longitude));
-        }
+        }*/
 
 /*
         if (newPassword.equals(null)) {
@@ -140,8 +169,7 @@ public class ProfileController extends AbstractLetsDigController {
         model.addAttribute("username", user.getUsername());
         model.addAttribute("firstName", user.getFirstName());
         model.addAttribute("lastName", user.getLastName());
-        model.addAttribute("latitude", user.getLatitude());
-        model.addAttribute("longitude", user.getLongitude());
+
 
         // display the profile template
         return "profile";
@@ -150,17 +178,73 @@ public class ProfileController extends AbstractLetsDigController {
 
     @RequestMapping(value = "home")
     public String home(HttpServletRequest request, Model model) {
+
+        // get user's data from db
         User user = getUserFromSession(request);
-        String displayName;
 
-        if (user.getFirstName() == null) {
-            displayName = user.getUsername();
-        } else {
-            displayName = user.toString();
-        }
-
-        model.addAttribute("displayName", displayName);
+        // add name to model
+        model.addAttribute("displayName", user.gimmeDisplayName());
 
         return "home";
+    }
+
+    @RequestMapping(value = "/changepwd", method = RequestMethod.GET)
+    public String changPwd (HttpServletRequest request, Model model) {
+
+        // get user's data from db
+        User user = getUserFromSession(request);
+
+        // add name to model
+        model.addAttribute("displayName", user.gimmeDisplayName());
+
+        return "changepwd";
+    }
+
+    @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
+    public String changePwd(String oldPassword, String newPassword, String confirmNewPassword, HttpServletRequest request, Model model) {
+
+        // get user's data from db
+        User user = getUserFromSession(request);
+
+        // check for validity of old password
+        if (!PasswordHash.isValidPassword(oldPassword, user.getHash())) {
+
+            // TODO: delete or implement old error message display method
+            // return this.displayError("Invalid password.", model);
+
+            model.addAttribute("message", "Invalid password");
+            return "error";
+
+        // verify match btw new pwd and confirmation
+        } else if (!newPassword.equals(confirmNewPassword)) {
+
+            return this.displayError("Password and confirmation don't match.", model);
+        } else {
+
+            // set the hash (this method hashes the pwd and sets it)
+            user.setHash(newPassword);
+
+            // save changes
+            userDao.save(user);
+
+            return "confirm";
+        }
+    }
+
+    @RequestMapping(value = "/map")
+    public String map(HttpServletRequest request, Model model) {
+
+        // get user from db
+        User user = getUserFromSession(request);
+
+        // get lat long info
+        // LatLong location = latLongDao.findByUid(user.getLocationId());
+
+        if (user.getLocation() != null) {
+            return user.getLocation().putOnMap();
+        } else {
+            model.addAttribute("message", "Location data not found.");
+            return "error";
+        }
     }
 }

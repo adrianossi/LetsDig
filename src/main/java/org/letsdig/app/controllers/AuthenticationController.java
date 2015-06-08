@@ -100,5 +100,4 @@ public class AuthenticationController extends AbstractLetsDigController {
         request.getSession().invalidate();
         return "redirect:login";
     }
-
 }

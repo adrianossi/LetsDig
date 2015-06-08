@@ -1,8 +1,12 @@
-org/letsdig/app/models/AbstractLetsDigEntity.class
-org/letsdig/app/controllers/AuthenticationController.class
 org/letsdig/app/controllers/AbstractLetsDigController.class
 org/letsdig/app/LetsDigApplication.class
-org/letsdig/app/models/util/PasswordHash.class
 org/letsdig/app/models/User.class
+org/letsdig/app/models/AbstractLetsDigEntity.class
+org/letsdig/app/models/dao/ProjectDao.class
+org/letsdig/app/controllers/AuthenticationController.class
+org/letsdig/app/models/dao/LatLongDao.class
+org/letsdig/app/models/LatLong.class
+org/letsdig/app/models/util/PasswordHash.class
 org/letsdig/app/AuthenticationInterceptor.class
 org/letsdig/app/models/dao/UserDao.class
+org/letsdig/app/models/Project.class
