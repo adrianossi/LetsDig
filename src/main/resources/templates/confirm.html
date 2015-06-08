@@ -11,7 +11,7 @@
     <header th:replace="template :: header-foyer">
     </header>
     <main>
-        <p th:replace="${message}">Confirmation Message</p>
+        <p th:text="${message}">Confirmation Message</p>
     </main>
     <footer th:replace="template :: footer-auth">
     </footer>

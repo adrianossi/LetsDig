@@ -17,10 +17,6 @@ public class Project extends AbstractLetsDigEntity {
 
     public Project (int directorId, String name) {
 
-        // WORKING HERE. In the process of changing director as User to
-        // director as int directorId.  Will need to do another ManyToOne
-        // mapping based on cs50 finance java.
-
         this.directorId = directorId;
         this.name = name;
         this.location = null;

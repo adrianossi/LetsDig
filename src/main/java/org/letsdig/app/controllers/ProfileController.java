@@ -209,7 +209,7 @@ public class ProfileController extends AbstractLetsDigController {
         // check for validity of old password
         if (!PasswordHash.isValidPassword(oldPassword, user.getHash())) {
 
-            // TODO: delete or implement old error message display method
+            // TODO: delete this line, or implement cs50 error message display method
             // return this.displayError("Invalid password.", model);
 
             model.addAttribute("message", "Invalid password");
@@ -219,14 +219,17 @@ public class ProfileController extends AbstractLetsDigController {
         } else if (!newPassword.equals(confirmNewPassword)) {
 
             return this.displayError("Password and confirmation don't match.", model);
+
         } else {
 
-            // set the hash (this method hashes the pwd and sets it)
-            user.setHash(newPassword);
+            // create and set the hash
+            String hash = PasswordHash.getHash(newPassword);
+            user.setHash(hash);
 
             // save changes
             userDao.save(user);
 
+            model.addAttribute("message", "Password updated.");
             return "confirm";
         }
     }

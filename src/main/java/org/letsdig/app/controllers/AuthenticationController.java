@@ -80,7 +80,7 @@ public class AuthenticationController extends AbstractLetsDigController {
 
         // verify that user entered valid password; if not, display error
         } else if (!PasswordHash.isValidPassword(password, existingUser.getHash())) {
-            //return this.displayError("Invalid password.", model);
+
             model.addAttribute("message", "Invalid password");
             return "error";
         }
@@ -88,7 +88,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         // User and password are verified, so log the user into the session
         request.getSession().setAttribute(userSessionKey, existingUser.getUid());
 
-        // Store user's name
+        // add user's name to model
         model.addAttribute("displayName", existingUser.gimmeDisplayName());
 
         // display login landing page
