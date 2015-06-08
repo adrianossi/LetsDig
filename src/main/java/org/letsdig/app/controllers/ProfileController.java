@@ -105,74 +105,62 @@ public class ProfileController extends AbstractLetsDigController {
         User user = getUserFromSession(request);
         
         // check each field for user input; if empty-->skip, else-->set
+        // USERNAME
         if (username != "" && !username.equals(user.getUsername())) {
             user.setUsername(username);
         }
 
+        // FIRSTNAME
         if (firstName != "" && !firstName.equals(user.getFirstName())) {
             user.setFirstName(firstName);
         }
 
+        // LASTNAME
         if (lastName != "" && !lastName.equals(user.getLastName())) {
             user.setLastName(lastName);
         }
 
-        if (latitude != "" && user.getLocation().getLatitude() != Double.valueOf(latitude)) {
-            user.getLocation().setLatitude(Double.valueOf(latitude));
-        }
+        // LOCATION: LAT/LONG
+        if (!(latitude == "" && longitude == "")) {
 
-        if (longitude != "" && user.getLocation().getLongitude() != Double.valueOf(longitude)) {
-            user.getLocation().setLongitude(Double.valueOf(longitude));
-        }
-
-        /*
-        if (latitude != "" || longitude != "") {
-            LatLong location = latLongDao.findByUid(user.getLocationId());
-            if (location != null) {
-                location.setLatitude(Double.valueOf(latitude));
-                location.setLongitude(Double.valueOf(longitude));
-                latLongDao.save(location);
-                model.addAttribute("latitude", location.getLatitude());
-                model.addAttribute("longitude", location.getLongitude());
-            } else {
-                location = new LatLong(Double.valueOf(latitude), Double.valueOf(longitude));
-                latLongDao.save(location);
-                user.setLocationId(location.getUid());
-                model.addAttribute("latitude", location.getLatitude());
-                model.addAttribute("longitude", location.getLongitude());
+            // user input validation 1: must submit lat AND long
+            if (latitude == "" || longitude == "") {
+                model.addAttribute("message", "You must submit both latitude and longitude.");
+                return "error";
             }
-        }*/
 
-        /* OLD LAT/LONG UPDATER
-        && Double.valueOf(latitude) != location.getLatitude()) {
-            user.setLatitude(Double.valueOf(latitude));
+            // user input validation 2: input must be castable as double
+            double latitudeAsDouble;
+            double longitudeAsDouble;
+
+            try {
+                latitudeAsDouble = Double.valueOf(latitude);
+                longitudeAsDouble = Double.valueOf(longitude);
+            } catch (IllegalArgumentException e){
+                model.addAttribute("message", "Invalid location data. Try again.");
+                return "error";
+            }
+
+            // input is valid, so query locations db for submitted lat and long
+            LatLong newLocation = latLongDao.findByLatitudeAndLongitude(latitudeAsDouble, longitudeAsDouble);
+
+            // if not found in db, create new LatLong
+            if (newLocation == null) {
+                newLocation = new LatLong(latitudeAsDouble, longitudeAsDouble);
+            }
+
+            // set LatLong as user's location and save both
+            latLongDao.save(newLocation);
+            user.setLocation(newLocation);
+
+            // test data 40.3496462, -74.6596824
         }
 
-        if (longitude != "" && Double.valueOf(longitude) != user.getLongitude()) {
-            user.setLongitude(Double.valueOf(longitude));
-        }*/
-
-/*
-        if (newPassword.equals(null)) {
-            model.addAttribute("passwordmessage", "(hidden)");
-        } else if (!newPassword.equals(newPasswordConfirm)) {
-            model.addAttribute("passwordmessage", "Password and confirmation do not match.");
-        } else {
-            user.setHash(PasswordHash.getHash(newPassword));
-            model.addAttribute("passwordmessage", "Password updated");
-        }
-*/
         // save updated user data to db
         userDao.save(user);
 
-        // add new info to model
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("firstName", user.getFirstName());
-        model.addAttribute("lastName", user.getLastName());
-
-
-        // display the profile template
-        return "profile";
+        // redirect to (updated) profile
+        return "redirect:profile";
 
     }
 
