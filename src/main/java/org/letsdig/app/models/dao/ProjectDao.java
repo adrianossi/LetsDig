@@ -9,9 +9,13 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ProjectDao extends CrudRepository<Project, Integer> {
 
-    Project findByUid(int uid);
-
     Project findByName(String name);
 
     Project findByLocation(LatLong location);
+
+    Project findByDirectorId(int director_id);
+
+    Project findByDirectorIdAndName(int director_id, String name);
+
+    Project findByUid(int project_id);
 }

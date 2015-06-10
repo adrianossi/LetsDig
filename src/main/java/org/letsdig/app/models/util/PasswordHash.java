@@ -21,7 +21,6 @@ public class PasswordHash {
     //    }
 
         // Create a one-way hash of password
-
         String hash = null;
         String saltedPassword = applySalt(password);
 

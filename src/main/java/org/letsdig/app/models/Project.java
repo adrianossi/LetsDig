@@ -34,7 +34,6 @@ public class Project extends AbstractLetsDigEntity {
         this.directorId = directorId;
     }
 
-    @NotNull
     @ManyToOne
     public LatLong getLocation() {
         return location;

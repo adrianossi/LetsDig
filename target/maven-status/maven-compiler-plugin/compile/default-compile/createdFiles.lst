@@ -1,7 +1,10 @@
+org/letsdig/app/models/util/LatLongUtils.class
 org/letsdig/app/controllers/AbstractLetsDigController.class
+org/letsdig/app/controllers/ProjectController.class
 org/letsdig/app/LetsDigApplication.class
 org/letsdig/app/models/User.class
 org/letsdig/app/models/AbstractLetsDigEntity.class
+org/letsdig/app/WebApplicationConfig.class
 org/letsdig/app/models/dao/ProjectDao.class
 org/letsdig/app/controllers/AuthenticationController.class
 org/letsdig/app/models/dao/LatLongDao.class

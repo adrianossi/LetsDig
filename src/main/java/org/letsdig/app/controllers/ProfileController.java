@@ -2,8 +2,7 @@ package org.letsdig.app.controllers;
 
 import org.letsdig.app.models.LatLong;
 import org.letsdig.app.models.User;
-import org.letsdig.app.models.dao.LatLongDao;
-import org.letsdig.app.models.dao.UserDao;
+import org.letsdig.app.models.util.LatLongUtils;
 import org.letsdig.app.models.util.PasswordHash;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,31 +122,14 @@ public class ProfileController extends AbstractLetsDigController {
         // LOCATION: LAT/LONG
         if (!(latitude == "" && longitude == "")) {
 
-            // user input validation 1: must submit lat AND long
-            if (latitude == "" || longitude == "") {
-                model.addAttribute("message", "You must submit both latitude and longitude.");
+            // check if user's input is valid for lat/long
+            if (!LatLongUtils.isValidLatLong(latitude, longitude)) {
+                model.addAttribute("message", "Invalid location. Please try again.");
                 return "error";
             }
 
-            // user input validation 2: input must be castable as double
-            double latitudeAsDouble;
-            double longitudeAsDouble;
-
-            try {
-                latitudeAsDouble = Double.valueOf(latitude);
-                longitudeAsDouble = Double.valueOf(longitude);
-            } catch (IllegalArgumentException e){
-                model.addAttribute("message", "Invalid location data. Try again.");
-                return "error";
-            }
-
-            // input is valid, so query locations db for submitted lat and long
-            LatLong newLocation = latLongDao.findByLatitudeAndLongitude(latitudeAsDouble, longitudeAsDouble);
-
-            // if not found in db, create new LatLong
-            if (newLocation == null) {
-                newLocation = new LatLong(latitudeAsDouble, longitudeAsDouble);
-            }
+            // get the LatLong from the db
+            LatLong newLocation = LatLongUtils.lookup(Double.valueOf(latitude), Double.valueOf(longitude));
 
             // set LatLong as user's location and save both
             latLongDao.save(newLocation);
@@ -162,18 +144,6 @@ public class ProfileController extends AbstractLetsDigController {
         // redirect to (updated) profile
         return "redirect:profile";
 
-    }
-
-    @RequestMapping(value = "home")
-    public String home(HttpServletRequest request, Model model) {
-
-        // get user's data from db
-        User user = getUserFromSession(request);
-
-        // add name to model
-        model.addAttribute("displayName", user.gimmeDisplayName());
-
-        return "home";
     }
 
     @RequestMapping(value = "/changepwd", method = RequestMethod.GET)

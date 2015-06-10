@@ -21,6 +21,13 @@
     </form>
     <form class="landing" method="post" action="/loadproject">
         <fieldset>
+            <select name="projectName">
+                <option disabled="disabled">Select Project</option>
+                <option th:each="project : ${projects}"
+                        th:value="@{project}"
+                        th:text="${project}"
+                        th:unless="${#lists.isEmpty(projects)}">(No projects available)</option>
+            </select>
             <input class="form-control" name="projectName" placeholder="Project name" type="text"/>
             <button type="submit">Load Project</button>
         </fieldset>

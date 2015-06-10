@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="/css/normalize.css"/>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>LetsDig: Main Menu</title>
+</head>
+
+<body>
+    <header th:replace="template :: header-foyer">
+    </header>
+
+    <main>
+        <h2 th:text="${projectName}">Project Name</h2>
+        (<a href="/unloadproject">Close project</a>)
+        <form class="indoors" method="post" action="projectedit.html">
+            <fieldset>
+                <div class="form-group">
+                    <input class="form-control" name="latitude" placeholder="Latitude" type="number" step="0.0000001"/>
+                    <input class="form-control" name="longitude" placeholder="Longitude" type="number" step="0.0000001"/>
+                    <button type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer th:replace="template :: footer-auth">
+    </footer>
+</body>
+</html>

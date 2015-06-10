@@ -55,7 +55,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         model.addAttribute("displayName", newUser.gimmeDisplayName());
 
         // display login landing page
-        return "redirect:home";
+        return "redirect:projects";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -87,12 +87,13 @@ public class AuthenticationController extends AbstractLetsDigController {
 
         // User and password are verified, so log the user into the session
         request.getSession().setAttribute(userSessionKey, existingUser.getUid());
+        request.getSession().setAttribute(projectSessionKey, 0);
 
         // add user's name to model
         model.addAttribute("displayName", existingUser.gimmeDisplayName());
 
         // display login landing page
-        return "redirect:home";
+        return "redirect:projects";
     }
 
     @RequestMapping(value = "/logout")

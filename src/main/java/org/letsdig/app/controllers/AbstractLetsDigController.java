@@ -1,17 +1,20 @@
 package org.letsdig.app.controllers;
 
+import org.letsdig.app.models.Project;
 import org.letsdig.app.models.User;
 import org.letsdig.app.models.dao.LatLongDao;
 import org.letsdig.app.models.dao.ProjectDao;
 import org.letsdig.app.models.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by adrian on 6/1/15.
  */
+@SessionAttributes("project_id")
 public abstract class AbstractLetsDigController {
 
     @Autowired
@@ -29,6 +32,7 @@ public abstract class AbstractLetsDigController {
 
     // static property for user identification
     public static final String userSessionKey = "user_id";
+    public static final String projectSessionKey = "project_id";
 
     // method for any given controller in the app to display an error
     public String displayError(String message, Model model) {
@@ -36,15 +40,33 @@ public abstract class AbstractLetsDigController {
         return errorTemplateIdentifier;
     }
 
-    // method for any given controller in the app to identify the current user
-    public User getUserFromSession(HttpServletRequest request) {
-
-        // get the user id from the session
-        int userId = (int)request.getSession().getAttribute(userSessionKey);
-
-        // find the user in the db
-        return userDao.findByUid(userId);
-
+    // method for any controller to get the current user's id
+    public int getUserIdFromSession(HttpServletRequest request) {
+        return (int)request.getSession().getAttribute(userSessionKey);
     }
+
+    // method for any controller to get the current User object
+    public User getUserFromSession(HttpServletRequest request) {
+        return userDao.findByUid(getUserIdFromSession(request));
+    }
+
+    // method for any controller to get the current project id
+    public int getProjectIdFromSession(HttpServletRequest request) {
+        int key;
+
+        try {
+            key = (int) request.getSession().getAttribute(projectSessionKey);
+            return key;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    // method for any controller to get the current Project object
+    public Project getProjectFromSession(HttpServletRequest request) {
+        return projectDao.findByUid(getProjectIdFromSession(request));
+    }
+
 
 }
