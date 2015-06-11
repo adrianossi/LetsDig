@@ -3,6 +3,7 @@ package org.letsdig.app.controllers;
 import org.letsdig.app.models.LatLong;
 import org.letsdig.app.models.Project;
 import org.letsdig.app.models.User;
+import org.letsdig.app.models.dao.GridDao;
 import org.letsdig.app.models.dao.LatLongDao;
 import org.letsdig.app.models.dao.ProjectDao;
 import org.letsdig.app.models.dao.UserDao;
@@ -26,6 +27,9 @@ public abstract class AbstractLetsDigController {
 
     @Autowired
     protected ProjectDao projectDao;
+
+    @Autowired
+    protected GridDao gridDao;
 
     // static properties for error display
     private static final String errorTemplateIdentifier = "error";
