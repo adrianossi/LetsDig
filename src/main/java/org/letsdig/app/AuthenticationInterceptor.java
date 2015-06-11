@@ -32,7 +32,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
         }
 
         // list of publicly accessible authentication pages
-        List<String> authPages = Arrays.asList("/", "/login", "/register");
+        List<String> authPages = Arrays.asList("/", "/login", "/register", "/login.html", "/register.html");
 
         // is requested page in public list? Save for future checks
         boolean isPublicRequestedUri = authPages.contains(request.getRequestURI());

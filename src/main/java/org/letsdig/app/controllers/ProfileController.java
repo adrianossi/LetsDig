@@ -49,15 +49,6 @@ public class ProfileController extends AbstractLetsDigController {
             model.addAttribute("longitude", "empty");
         }
 
-            /*
-            LatLong location = latLongDao.findByUid(user.getLocationId());
-            model.addAttribute("latitude", location.getLatitude());
-            model.addAttribute("longitude", location.getLongitude());
-        } else {
-            model.addAttribute("latitude", "empty");
-            model.addAttribute("longitude", "empty");
-        }*/
-
         // display the profile template
         return "profile";
     }
@@ -105,22 +96,22 @@ public class ProfileController extends AbstractLetsDigController {
         
         // check each field for user input; if empty-->skip, else-->set
         // USERNAME
-        if (username != "" && !username.equals(user.getUsername())) {
+        if (!username.equals("") && !username.equals(user.getUsername())) {
             user.setUsername(username);
         }
 
         // FIRSTNAME
-        if (firstName != "" && !firstName.equals(user.getFirstName())) {
+        if (!firstName.equals("") && !firstName.equals(user.getFirstName())) {
             user.setFirstName(firstName);
         }
 
         // LASTNAME
-        if (lastName != "" && !lastName.equals(user.getLastName())) {
+        if (!lastName.equals("") && !lastName.equals(user.getLastName())) {
             user.setLastName(lastName);
         }
 
         // LOCATION: LAT/LONG
-        if (!(latitude == "" && longitude == "")) {
+        if (!(latitude.equals("") && longitude.equals(""))) {
 
             // check if user's input is valid for lat/long
             if (!LatLongUtils.isValidLatLong(latitude, longitude)) {
@@ -129,7 +120,7 @@ public class ProfileController extends AbstractLetsDigController {
             }
 
             // get the LatLong from the db
-            LatLong newLocation = LatLongUtils.lookup(Double.valueOf(latitude), Double.valueOf(longitude));
+            LatLong newLocation = this.lookupLatLong(Double.valueOf(latitude), Double.valueOf(longitude));
 
             // set LatLong as user's location and save both
             latLongDao.save(newLocation);
@@ -197,9 +188,6 @@ public class ProfileController extends AbstractLetsDigController {
 
         // get user from db
         User user = getUserFromSession(request);
-
-        // get lat long info
-        // LatLong location = latLongDao.findByUid(user.getLocationId());
 
         if (user.getLocation() != null) {
             return user.getLocation().putOnMap();

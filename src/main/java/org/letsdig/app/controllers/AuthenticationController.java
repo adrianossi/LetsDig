@@ -87,7 +87,6 @@ public class AuthenticationController extends AbstractLetsDigController {
 
         // User and password are verified, so log the user into the session
         request.getSession().setAttribute(userSessionKey, existingUser.getUid());
-        request.getSession().setAttribute(projectSessionKey, 0);
 
         // add user's name to model
         model.addAttribute("displayName", existingUser.gimmeDisplayName());

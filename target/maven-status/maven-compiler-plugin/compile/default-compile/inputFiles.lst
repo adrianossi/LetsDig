@@ -1,6 +1,7 @@
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/util/PasswordHash.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/AbstractLetsDigController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/ProjectController.java
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/LatLongController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/LatLong.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/AuthenticationInterceptor.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/User.java
@@ -11,5 +12,6 @@
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/Project.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/LatLongDao.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/UserDao.java
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/WebApplicationConfig.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/ProjectDao.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/ProfileController.java

@@ -13,12 +13,14 @@ public class Project extends AbstractLetsDigEntity {
 
     private int directorId;
     private String name;
+    private String fullName;
     private LatLong location;
 
     public Project (int directorId, String name) {
 
         this.directorId = directorId;
         this.name = name;
+        this.fullName = null;
         this.location = null;
     }
 
@@ -34,15 +36,6 @@ public class Project extends AbstractLetsDigEntity {
         this.directorId = directorId;
     }
 
-    @ManyToOne
-    public LatLong getLocation() {
-        return location;
-    }
-
-    public void setLocation(LatLong location) {
-        this.location = location;
-    }
-
     @NotNull
     @Column(name = "name")
     public String getName() {
@@ -52,4 +45,23 @@ public class Project extends AbstractLetsDigEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Column(name = "full_name")
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    @ManyToOne
+    public LatLong getLocation() {
+        return location;
+    }
+
+    public void setLocation(LatLong location) {
+        this.location = location;
+    }
+
 }

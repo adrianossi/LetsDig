@@ -1,5 +1,6 @@
 package org.letsdig.app.controllers;
 
+import org.letsdig.app.models.LatLong;
 import org.letsdig.app.models.Project;
 import org.letsdig.app.models.User;
 import org.letsdig.app.models.dao.LatLongDao;
@@ -32,6 +33,8 @@ public abstract class AbstractLetsDigController {
 
     // static property for user identification
     public static final String userSessionKey = "user_id";
+
+    // TODO delete this unused sessionKey
     public static final String projectSessionKey = "project_id";
 
     // method for any given controller in the app to display an error
@@ -50,6 +53,8 @@ public abstract class AbstractLetsDigController {
         return userDao.findByUid(getUserIdFromSession(request));
     }
 
+
+/*  TODO delete this failed attempt to store project in session
     // method for any controller to get the current project id
     public int getProjectIdFromSession(HttpServletRequest request) {
         int key;
@@ -67,6 +72,32 @@ public abstract class AbstractLetsDigController {
     public Project getProjectFromSession(HttpServletRequest request) {
         return projectDao.findByUid(getProjectIdFromSession(request));
     }
+*/
 
+    public LatLong lookupLatLong(double latitude, double longitude) {
 
+        LatLong newLocation;
+
+      /* DB LOOKUP USING TRY/CATCH
+        try {
+            newLocation = latLongDao.findByLatitudeAndLongitude(latitude, longitude);
+        } catch (NullPointerException e) {
+            newLocation = new LatLong(latitude, longitude);
+            latLongDao.save(newLocation); FIXME null pointer exception happens here
+        }
+      */
+
+        // DB LOOKUP WITH NULL CHECK
+        newLocation = latLongDao.findByLatitudeAndLongitude(latitude, longitude);
+
+        // if not found in db, create new LatLong
+        if (newLocation == null) {
+
+            newLocation = new LatLong(latitude, longitude);
+            latLongDao.save(newLocation);
+        }
+
+        // return the valid LatLong
+        return newLocation;
+    }
 }

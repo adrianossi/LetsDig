@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,7 +27,9 @@ public class ProjectController extends AbstractLetsDigController {
     // this controller.
 
     @RequestMapping(value = "/projects")
-    public String projects(HttpServletRequest request, Model model) {
+    public String projects(
+            HttpServletRequest request,
+            Model model) {
 
         // get user's data from db
         User user = getUserFromSession(request);
@@ -39,7 +40,7 @@ public class ProjectController extends AbstractLetsDigController {
         // check for projects owned by user
         List<Project> projects = user.getProjects();
 
-        // get project names
+        // get and store project names
         ArrayList<String> projectNames = new ArrayList<>();
 
         if (projects != null) {
@@ -57,6 +58,7 @@ public class ProjectController extends AbstractLetsDigController {
     public String createProject(
             String projectName,
             HttpServletRequest request,
+            HttpSession session,
             Model model) {
 
         // get user's data from db
@@ -79,18 +81,19 @@ public class ProjectController extends AbstractLetsDigController {
         projectDao.save(currentProject);
 
         // load project into session
-        request.getSession().setAttribute(projectSessionKey, currentProject.getUid());
+        session.setAttribute("project", currentProject);
 
         // prep model
         model.addAttribute("projectName", currentProject.getName());
 
-        return "projectview";
+        return "project-view";
     }
 
     @RequestMapping(value = "/loadproject", method = RequestMethod.POST)
     public String loadProject(
             String projectName,
             HttpServletRequest request,
+            HttpSession session,
             Model model) {
 
         // query db for project
@@ -103,12 +106,11 @@ public class ProjectController extends AbstractLetsDigController {
         }
 
         // load project into session
-        //session.setAttribute("project", currentProject);
-
-        request.getSession().setAttribute(projectSessionKey, currentProject.getUid());
+        session.setAttribute("project", currentProject);
 
         // prep model
         model.addAttribute("projectName", currentProject.getName());
+        model.addAttribute("fullName", currentProject.getFullName());
 
         if (currentProject.getLocation() != null) {
             model.addAttribute("latitude", currentProject.getLocation().getLatitude());
@@ -118,34 +120,108 @@ public class ProjectController extends AbstractLetsDigController {
             model.addAttribute("longitude", "empty");
         }
 
-        return "projectview";
+        return "project-view";
     }
 
     @RequestMapping(name = "/unloadproject")
-    public String unloadProject(
-            HttpServletRequest request) {
+    public String unloadProject(HttpSession session) {
 
-        request.getSession().setAttribute(projectSessionKey, 0);
+        session.removeAttribute("project");
 
         return "projects";
     }
 
-    @RequestMapping(name = "/projectedit", method = RequestMethod.GET)
-    public String projectEdit (
-            HttpServletRequest request,
+    @RequestMapping(value = "/mapproject")
+    public String map(
+            HttpSession session,
             Model model) {
-        model.addAttribute("message", "Forwarded to projectedit via get.");
-        return "error";
+
+        // get project from db
+        Project project = (Project)session.getAttribute("project");
+
+        if (project == null) {
+            model.addAttribute("message", "Error loading project.");
+            return "error";
+        }
+
+        LatLong location = project.getLocation();
+
+        if (location != null) {
+            return location.putOnMap();
+        } else {
+            model.addAttribute("message", "Location data not found.");
+            return "error";
+        }
     }
-/*    @RequestMapping(name = "/projectedit", method = RequestMethod.GET)
-    public String projectEdit (
-            HttpServletRequest request,
+
+    @RequestMapping(name = "/projectedit", method = RequestMethod.POST)
+    public String projectEdit(
+            String fullName,
+            String latitude,
+            String longitude,
+            Model model,
+            HttpSession session) {
+
+        // check if session has a project
+        if (session.getAttribute("project") == null) {
+            return "projects";
+        }
+
+        // get and verify project from session
+        Project project = (Project)session.getAttribute("project");
+
+        if (project == null) {
+            model.addAttribute("message", "Error loading project.");
+            return "error";
+        }
+
+        // check if fullName input is present
+        if (!fullName.equals("")) {
+            project.setFullName(fullName);
+        }
+
+        // check if lat/long input is present
+        if (!(latitude.equals("") && longitude.equals(""))) {
+
+            // check if user's input is valid for lat/long
+            if (!LatLongUtils.isValidLatLong(latitude, longitude)) {
+                model.addAttribute("message", "Invalid location. Please try again.");
+                return "error";
+            }
+
+            // get the LatLong from the db
+            LatLong newLocation = this.lookupLatLong(Double.valueOf(latitude), Double.valueOf(longitude));
+
+            // set LatLong as project's location and save both
+            latLongDao.save(newLocation);
+            project.setLocation(newLocation);
+
+            // test data 40.3496462, -74.6596824
+        }
+
+        projectDao.save(project);
+
+        model.addAttribute("projectName", project.getName());
+        model.addAttribute("latitude", project.getLocation().getLatitude());
+        model.addAttribute("longitude", project.getLocation().getLongitude());
+
+        return "project-view";
+    }
+
+    @RequestMapping(name = "/projectedit", method = RequestMethod.GET)
+    public String projectEdit(
+            HttpSession session,
             Model model) {
 
-        // FIXME Why does this code run when / is requested after the whole app first starts????
+        // FIXME Why does this code run when it is not called????
 
-        // get the project
-        Project project = getProjectFromSession(request);
+        // check if session has a projects
+        if (session.getAttribute("project") == null) {
+            return "projects";
+        }
+
+        // get and verify the project
+        Project project = (Project)session.getAttribute("project");
 
         if (project != null) {
 
@@ -160,47 +236,8 @@ public class ProjectController extends AbstractLetsDigController {
                 model.addAttribute("longitude", "empty");
             }
         }
-        return "projectedit";
-    }
-*/
-    @RequestMapping(name = "/projectedit", method = RequestMethod.POST)
-    public String projectEdit(
-            String latitude,
-            String longitude,
-            Model model,
-            HttpServletRequest request) {
 
-        // get project from session
-        Project project = getProjectFromSession(request);
-
-        // TODO create ability to add displayName for each project
-
-        // check if lat/long input is present
-        if (!(latitude == "" && longitude == "")) {
-
-            // check if user's input is valid for lat/long
-            if (!LatLongUtils.isValidLatLong(latitude, longitude)) {
-                model.addAttribute("message", "Invalid location. Please try again.");
-                return "error";
-            }
-
-            // get the LatLong from the db
-            LatLong newLocation = LatLongUtils.lookup(Double.valueOf(latitude), Double.valueOf(longitude));
-
-            // set LatLong as project's location and save both
-            // latLongDao.save(newLocation); NOTE: LatLongUtils.lookup saves a new LatLong via dao
-            project.setLocation(newLocation);
-
-            // test data 40.3496462, -74.6596824
-        }
-
-        projectDao.save(project);
-
-        model.addAttribute("projectName", project.getName());
-        model.addAttribute("latitude", project.getLocation().getLatitude());
-        model.addAttribute("longitude", project.getLocation().getLongitude());
-
-        return "projectview";
+        return "dig-edit";
     }
 
 }

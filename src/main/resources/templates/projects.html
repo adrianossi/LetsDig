@@ -1,15 +1,15 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.w3.org/1999/xhtml">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="/css/normalize.css"/>
-    <link rel="stylesheet" href="/css/styles.css"/>
-    <title>LetsDig: Main Menu</title>
+
+<head th:replace="template :: head-frontdoor">
 </head>
 
 <body>
+<!--
 <header th:replace="template :: header-foyer">
 </header>
+-->
 
 <main class="centered">
     <p id="greeting">Welcome, <span class="displayName" th:text="${displayName}">User</span>!</p>
@@ -21,6 +21,7 @@
     </form>
     <form class="landing" method="post" action="/loadproject">
         <fieldset>
+            <!--
             <select name="projectName">
                 <option disabled="disabled">Select Project</option>
                 <option th:each="project : ${projects}"
@@ -28,16 +29,19 @@
                         th:text="${project}"
                         th:unless="${#lists.isEmpty(projects)}">(No projects available)</option>
             </select>
+            -->
             <input class="form-control" name="projectName" placeholder="Project name" type="text"/>
             <button type="submit">Load Project</button>
         </fieldset>
     </form>
 
-    <nav class="bottom"><a href="profile.html">View Profile</a> | <a href="/settings">Settings</a> | </nav>
+    <nav class="bottom"><a href="/profile">View Profile</a> | <a href="/settings">Settings</a> | </nav>
 </main>
 
+<!--
 <footer th:replace="template :: footer-auth">
 </footer>
+-->
 
 </body>
 </html>
