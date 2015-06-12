@@ -3,10 +3,7 @@ package org.letsdig.app.controllers;
 import org.letsdig.app.models.LatLong;
 import org.letsdig.app.models.Project;
 import org.letsdig.app.models.User;
-import org.letsdig.app.models.dao.GridDao;
-import org.letsdig.app.models.dao.LatLongDao;
-import org.letsdig.app.models.dao.ProjectDao;
-import org.letsdig.app.models.dao.UserDao;
+import org.letsdig.app.models.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -16,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Created by adrian on 6/1/15.
  */
-@SessionAttributes("project_id")
+
 public abstract class AbstractLetsDigController {
 
     @Autowired
@@ -31,15 +28,15 @@ public abstract class AbstractLetsDigController {
     @Autowired
     protected GridDao gridDao;
 
+//    @Autowired
+  //  protected UnitDao unitDao;
+
     // static properties for error display
     private static final String errorTemplateIdentifier = "error";
     private static final String errorMessageIdentifier = "message";
 
     // static property for user identification
     public static final String userSessionKey = "user_id";
-
-    // TODO delete this unused sessionKey
-    public static final String projectSessionKey = "project_id";
 
     // method for any given controller in the app to display an error
     public String displayError(String message, Model model) {

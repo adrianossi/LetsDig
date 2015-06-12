@@ -1,7 +1,6 @@
 package org.letsdig.app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by adrian on 6/11/15.
@@ -11,28 +10,50 @@ import javax.persistence.Table;
 @Table(name = "grids")
 public class Grid extends AbstractLetsDigEntity {
 
-    public enum LabelType {
-        ALPHA("alphabetical"), NUM("numerical");
+    private Project project;
+    private LatLong origin;
+    private int bigGridNumRows;
+    private int bigGridNumCols;
+    private double bigGridSquareSize;
+//    private int medGridNumRows;
+  //  private LabelType medGridRowLabelType;
+    //private LabelType medGridColLabelType;
+    // private List<Unit> units;
 
-        private String type;
 
-        LabelType(String type) {
-            this.type = type;
-        }
+    public Grid(
+            Project project,
+            LatLong origin,
+            int bigGridNumRows,
+            int bigGridNumCols,
+            double bigGridSquareSize
+    //        int medGridNumRows,
+      //      LabelType medGridRowLabelType,
+        //    LabelType medGridColLabelType
+    ){
+
+        this.project = project;
+        this.origin = origin;
+        this.bigGridNumRows = bigGridNumRows;
+        this.bigGridNumCols = bigGridNumCols;
+        this.bigGridSquareSize = bigGridSquareSize;
+    //    this.medGridNumRows = medGridNumRows;
+      //  this.medGridRowLabelType = medGridRowLabelType;
+        //this.medGridColLabelType = medGridColLabelType;
     }
 
-    LatLong origin;
-    int bigGridNumRows;
-    int bigGridNumCols;
-    LabelType bigGridRowLabelType;
-    LabelType bigGridColLabelType;
-    double bigGridSquareSize;
-    int medGridNumRows;
-    LabelType medGridRowLabelType;
-    LabelType medGridColLabelType;
-    // Lisa<Unit> units;
+    public Grid() {}
 
+    @OneToOne(mappedBy = "grid")
+    public Project getProject() {
+        return project;
+    }
 
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    @ManyToOne
     public LatLong getOrigin() {
         return origin;
     }
@@ -41,6 +62,7 @@ public class Grid extends AbstractLetsDigEntity {
         this.origin = origin;
     }
 
+    @Column(name = "bg_num_rows")
     public int getBigGridNumRows() {
         return bigGridNumRows;
     }
@@ -49,6 +71,7 @@ public class Grid extends AbstractLetsDigEntity {
         this.bigGridNumRows = bigGridNumRows;
     }
 
+    @Column(name = "bg_num_cols")
     public int getBigGridNumCols() {
         return bigGridNumCols;
     }
@@ -57,22 +80,7 @@ public class Grid extends AbstractLetsDigEntity {
         this.bigGridNumCols = bigGridNumCols;
     }
 
-    public LabelType getBigGridRowLabelType() {
-        return bigGridRowLabelType;
-    }
-
-    public void setBigGridRowLabelType(LabelType bigGridRowLabelType) {
-        this.bigGridRowLabelType = bigGridRowLabelType;
-    }
-
-    public LabelType getBigGridColLabelType() {
-        return bigGridColLabelType;
-    }
-
-    public void setBigGridColLabelType(LabelType bigGridColLabelType) {
-        this.bigGridColLabelType = bigGridColLabelType;
-    }
-
+    @Column(name = "bg_sq_size")
     public double getBigGridSquareSize() {
         return bigGridSquareSize;
     }
@@ -81,6 +89,7 @@ public class Grid extends AbstractLetsDigEntity {
         this.bigGridSquareSize = bigGridSquareSize;
     }
 
+/*
     public int getMedGridNumRows() {
         return medGridNumRows;
     }
@@ -104,6 +113,11 @@ public class Grid extends AbstractLetsDigEntity {
     public void setMedGridColLabelType(LabelType medGridColLabelType) {
         this.medGridColLabelType = medGridColLabelType;
     }
+*/
 
-    public
+    public String originToString() {
+        return this.getOrigin().getLatitude() + ", " + this.getOrigin().getLongitude();
+    }
+
+
 }

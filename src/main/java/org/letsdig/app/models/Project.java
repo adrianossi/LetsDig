@@ -15,6 +15,7 @@ public class Project extends AbstractLetsDigEntity {
     private String name;
     private String fullName;
     private LatLong location;
+    private Grid grid;
 
     public Project (int directorId, String name) {
 
@@ -64,4 +65,12 @@ public class Project extends AbstractLetsDigEntity {
         this.location = location;
     }
 
+    @OneToOne
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+    }
 }

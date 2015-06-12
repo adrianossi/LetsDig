@@ -83,10 +83,7 @@ public class ProjectController extends AbstractLetsDigController {
         // load project into session
         session.setAttribute("project", currentProject);
 
-        // prep model
-        model.addAttribute("projectName", currentProject.getName());
-
-        return "project-view";
+        return "redirect:projectview";
     }
 
     @RequestMapping(value = "/loadproject", method = RequestMethod.POST)
@@ -108,27 +105,53 @@ public class ProjectController extends AbstractLetsDigController {
         // load project into session
         session.setAttribute("project", currentProject);
 
-        // prep model
-        model.addAttribute("projectName", currentProject.getName());
-        model.addAttribute("fullName", currentProject.getFullName());
+        return "redirect:projectview";
+    }
 
-        if (currentProject.getLocation() != null) {
-            model.addAttribute("latitude", currentProject.getLocation().getLatitude());
-            model.addAttribute("longitude", currentProject.getLocation().getLongitude());
+    @RequestMapping(value = "/projectview")
+    public String projectView (HttpSession session, Model model) {
+
+        // check if session has a project
+        if (session.getAttribute("project") == null) {
+            return "projects";
+        }
+
+        // get and verify project from session
+        Project project = (Project)session.getAttribute("project");
+
+        if (project == null) {
+            model.addAttribute("message", "Error loading project.");
+            return "error";
+        }
+
+        // prep model
+        model.addAttribute("projectName", project.getName());
+
+        if (project.getFullName() != null) {
+            model.addAttribute("fullName", project.getFullName());
+        }
+
+        if (project.getLocation() != null) {
+            model.addAttribute("latitude", project.getLocation().getLatitude());
+            model.addAttribute("longitude", project.getLocation().getLongitude());
         } else {
             model.addAttribute("latitude", "empty");
             model.addAttribute("longitude", "empty");
         }
 
+        if (project.getGrid() != null) {
+            model.addAttribute("gridStatus", "Grid is set (origin: " + project.getGrid().originToString() + ")");
+        }
+
         return "project-view";
     }
 
-    @RequestMapping(name = "/unloadproject")
+    @RequestMapping(value = "/unloadproject")
     public String unloadProject(HttpSession session) {
 
         session.removeAttribute("project");
 
-        return "projects";
+        return "redirect:projects";
     }
 
     @RequestMapping(value = "/mapproject")
@@ -154,7 +177,7 @@ public class ProjectController extends AbstractLetsDigController {
         }
     }
 
-    @RequestMapping(name = "/projectedit", method = RequestMethod.POST)
+    @RequestMapping(value = "/projectedit", method = RequestMethod.POST)
     public String projectEdit(
             String fullName,
             String latitude,
@@ -201,14 +224,10 @@ public class ProjectController extends AbstractLetsDigController {
 
         projectDao.save(project);
 
-        model.addAttribute("projectName", project.getName());
-        model.addAttribute("latitude", project.getLocation().getLatitude());
-        model.addAttribute("longitude", project.getLocation().getLongitude());
-
-        return "project-view";
+        return "redirect:projectview";
     }
 
-    @RequestMapping(name = "/projectedit", method = RequestMethod.GET)
+    @RequestMapping(value = "/projectedit", method = RequestMethod.GET)
     public String projectEdit(
             HttpSession session,
             Model model) {
