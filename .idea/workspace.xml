@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="afa1c414-5911-4898-a9f0-af600b4a7cad" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/models/Grid.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/controllers/GridController.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/models/dao/GridDao.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/Grid.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/GridController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/dao/GridDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/templates/set-grid.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/letsdig/app/controllers/AbstractLetsDigController.class" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/controllers/AbstractLetsDigController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/letsdig/app/models/LatLong.class" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/models/LatLong.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/letsdig/app/models/Project.class" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/models/Project.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/org/letsdig/app/controllers/ProjectController.class" afterPath="$PROJECT_DIR$/target/classes/org/letsdig/app/controllers/ProjectController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/AbstractLetsDigController.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/AbstractLetsDigController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/LatLong.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/LatLong.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/Project.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/Project.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProjectController.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProjectController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/project-view.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/project-view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="afa1c414-5911-4898-a9f0-af600b4a7cad" name="Default" comment="" />
     <ignored path="LetsDig.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -48,7 +27,7 @@
       <file leaf-file-name="Grid.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/letsdig/app/models/Grid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2390746">
+            <state vertical-scroll-proportion="5.7120824">
               <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
               <folding />
             </state>
@@ -929,12 +908,12 @@
       <workItem from="1433172604822" duration="135138000" />
       <workItem from="1434039852155" duration="1955000" />
       <workItem from="1434047778927" duration="2682000" />
-      <workItem from="1434141721613" duration="57000" />
+      <workItem from="1434141721613" duration="285000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139832000" />
+    <option name="totallyTimeSpent" value="140060000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1449,7 +1428,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/letsdig/app/models/Grid.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2390746">
+        <state vertical-scroll-proportion="5.7120824">
           <caret line="123" column="0" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
           <folding />
         </state>
