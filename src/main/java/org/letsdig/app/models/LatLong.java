@@ -20,12 +20,14 @@ public class LatLong extends AbstractLetsDigEntity {
     private double longitude;
     private List<User> users;
     private List<Project> projects;
+    private List<Grid> grids;
 
     public LatLong (double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
         users = new ArrayList<User>();
         projects = new ArrayList<Project>();
+        grids = new ArrayList<Grid>();
     }
 
     public LatLong () {}
@@ -67,6 +69,15 @@ public class LatLong extends AbstractLetsDigEntity {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    @OneToMany(mappedBy = "origin", cascade = CascadeType.PERSIST)
+    public List<Grid> getGrids() {
+        return grids;
+    }
+
+    public void setGrids(List<Grid> grids) {
+        this.grids = grids;
     }
 
     public String gimmeLocationString() {
