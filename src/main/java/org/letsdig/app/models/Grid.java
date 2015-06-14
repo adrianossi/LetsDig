@@ -15,10 +15,7 @@ public class Grid extends AbstractLetsDigEntity {
     private int bigGridNumRows;
     private int bigGridNumCols;
     private double bigGridSquareSize;
-//    private int medGridNumRows;
-  //  private LabelType medGridRowLabelType;
-    //private LabelType medGridColLabelType;
-    // private List<Unit> units;
+    // TODO add: private List<Unit> units;
 
 
     public Grid(
@@ -27,9 +24,6 @@ public class Grid extends AbstractLetsDigEntity {
             int bigGridNumRows,
             int bigGridNumCols,
             double bigGridSquareSize
-    //        int medGridNumRows,
-      //      LabelType medGridRowLabelType,
-        //    LabelType medGridColLabelType
     ){
 
         this.project = project;
@@ -37,9 +31,6 @@ public class Grid extends AbstractLetsDigEntity {
         this.bigGridNumRows = bigGridNumRows;
         this.bigGridNumCols = bigGridNumCols;
         this.bigGridSquareSize = bigGridSquareSize;
-    //    this.medGridNumRows = medGridNumRows;
-      //  this.medGridRowLabelType = medGridRowLabelType;
-        //this.medGridColLabelType = medGridColLabelType;
     }
 
     public Grid() {}
@@ -88,32 +79,6 @@ public class Grid extends AbstractLetsDigEntity {
     public void setBigGridSquareSize(double bigGridSquareSize) {
         this.bigGridSquareSize = bigGridSquareSize;
     }
-
-/*
-    public int getMedGridNumRows() {
-        return medGridNumRows;
-    }
-
-    public void setMedGridNumRows(int medGridNumRows) {
-        this.medGridNumRows = medGridNumRows;
-    }
-
-    public LabelType getMedGridRowLabelType() {
-        return medGridRowLabelType;
-    }
-
-    public void setMedGridRowLabelType(LabelType medGridRowLabelType) {
-        this.medGridRowLabelType = medGridRowLabelType;
-    }
-
-    public LabelType getMedGridColLabelType() {
-        return medGridColLabelType;
-    }
-
-    public void setMedGridColLabelType(LabelType medGridColLabelType) {
-        this.medGridColLabelType = medGridColLabelType;
-    }
-*/
 
     public String originToString() {
         return this.getOrigin().getLatitude() + ", " + this.getOrigin().getLongitude();

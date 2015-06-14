@@ -28,6 +28,9 @@ public abstract class AbstractLetsDigController {
     @Autowired
     protected GridDao gridDao;
 
+    @Autowired
+    protected UnitDao unitDao;
+
 //    @Autowired
   //  protected UnitDao unitDao;
 
