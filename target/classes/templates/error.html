@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+    <header th:replace="template :: header-frontdoor">
+    </header>
+
+    <main>
+        <p>Error.</p>
+        <p th:text="${message}">An error occurred.</p>
+    </main>
+
+</body>
+</html>

@@ -113,7 +113,8 @@ public class ProjectController extends AbstractLetsDigController {
 
         // check if session has a project
         if (session.getAttribute("project") == null) {
-            return "projects";
+            model.addAttribute("message", "No project is currently active.");
+            return "redirect:projects";
         }
 
         // get and verify project from session
