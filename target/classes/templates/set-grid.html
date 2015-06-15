@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+    <header><h1><img id="mainlogo" src="/img/letsdig_logo.jpg"/>LetsDig</h1></header>
+
+    <main>
+        <h2 th:text="${fullName}">Project Name</h2>
+        (<a href="/projectview">Back to project overview</a>)
+        <form class="indoors" method="post" action="/setgrid-execute">
+            <fieldset>
+                <div class="form-group">
+                    <p>Origin:
+                        <input class="form-control" name="latitude" placeholder="Latitude" type="number" step="0.0000001"/>
+                        <input class="form-control" name="longitude" placeholder="Longitude" type="number" step="0.0000001"/>
+                    </p>
+                    <p>Square size: <input class="form-control" name="bgSqSize" placeholder="Size in meters" type="number" min="0" step="1"/></p>
+                    <p>Number of rows: <input class="form-control" name="bgNumRows" placeholder="Number of rows" type="number" min="0" step="1"/></p>
+                    <p>Number of columns: <input class="form-control" name="bgNumCols" placeholder="Number of columns" type="number" min="0" step="1"/></p>
+                    <button type="submit">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer th:replace="template :: footer-auth"></footer>
+</body>
+</html>
