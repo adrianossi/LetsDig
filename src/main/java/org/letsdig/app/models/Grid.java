@@ -1,6 +1,8 @@
 package org.letsdig.app.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by adrian on 6/11/15.
@@ -15,25 +17,28 @@ public class Grid extends AbstractLetsDigEntity {
     private int bigGridNumRows;
     private int bigGridNumCols;
     private double bigGridSquareSize;
-    // TODO add: private List<Unit> units;
-
+    private List<Square> squares;
 
     public Grid(
             Project project,
             LatLong origin,
             int bigGridNumRows,
             int bigGridNumCols,
-            double bigGridSquareSize
-    ){
+            double bigGridSquareSize){
 
         this.project = project;
         this.origin = origin;
         this.bigGridNumRows = bigGridNumRows;
         this.bigGridNumCols = bigGridNumCols;
         this.bigGridSquareSize = bigGridSquareSize;
+        this.squares = new ArrayList<>();
     }
 
     public Grid() {}
+
+    /**
+     *          -----   GETTERS AND SETTERS  -----
+     */
 
     @OneToOne(mappedBy = "grid")
     public Project getProject() {
@@ -80,9 +85,22 @@ public class Grid extends AbstractLetsDigEntity {
         this.bigGridSquareSize = bigGridSquareSize;
     }
 
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "grid_id")
+    public List<Square> getSquares() {
+        return squares;
+    }
+
+    public void setSquares(List<Square> squares) {
+        this.squares = squares;
+    }
+
+    /**
+     *              ----- OTHER METHODS ------
+     */
+
     public String originToString() {
         return this.getOrigin().getLatitude() + ", " + this.getOrigin().getLongitude();
     }
-
 
 }

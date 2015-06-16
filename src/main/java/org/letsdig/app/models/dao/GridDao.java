@@ -13,4 +13,5 @@ import javax.transaction.Transactional;
 @Transactional
 @Repository
 public interface GridDao extends CrudRepository<Grid, Integer> {
+    Grid findByUid(int uid);
 }

@@ -25,9 +25,9 @@ public class LatLong extends AbstractLetsDigEntity {
     public LatLong (double latitude, double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
-        users = new ArrayList<User>();
-        projects = new ArrayList<Project>();
-        grids = new ArrayList<Grid>();
+        users = new ArrayList<>();
+        projects = new ArrayList<>();
+        grids = new ArrayList<>();
     }
 
     public LatLong () {}

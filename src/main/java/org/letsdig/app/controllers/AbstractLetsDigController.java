@@ -29,6 +29,9 @@ public abstract class AbstractLetsDigController {
     protected GridDao gridDao;
 
     @Autowired
+    protected SquareDao squareDao;
+
+    @Autowired
     protected UnitDao unitDao;
 
 //    @Autowired
@@ -82,16 +85,7 @@ public abstract class AbstractLetsDigController {
 
         LatLong newLocation;
 
-      /* DB LOOKUP USING TRY/CATCH
-        try {
-            newLocation = latLongDao.findByLatitudeAndLongitude(latitude, longitude);
-        } catch (NullPointerException e) {
-            newLocation = new LatLong(latitude, longitude);
-            latLongDao.save(newLocation); FIXME null pointer exception happens here
-        }
-      */
-
-        // DB LOOKUP WITH NULL CHECK
+        // lookup in db
         newLocation = latLongDao.findByLatitudeAndLongitude(latitude, longitude);
 
         // if not found in db, create new LatLong

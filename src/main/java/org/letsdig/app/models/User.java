@@ -28,7 +28,7 @@ public class User extends AbstractLetsDigEntity {
         this.firstName = null;
         this.lastName = null;
         this.location = null;
-        this.projects = new ArrayList<Project>();
+        this.projects = new ArrayList<>();
     }
 
     // Empty constructor for Spring to use
