@@ -18,7 +18,6 @@ public class Project extends AbstractLetsDigEntity {
     private String fullName;
     private LatLong location;
     private Grid grid;
-    private List<Unit> units;
 
     public Project (int directorId, String name) {
 
@@ -27,7 +26,6 @@ public class Project extends AbstractLetsDigEntity {
         this.fullName = null;
         this.location = null;
         this.grid = null;
-        this.units = new ArrayList<Unit>();
     }
 
     public Project () {}

@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+    <header th:replace="template :: header-foyer"></header>
+
+    <main>
+        <p>Unit: <span th:text="${unitName}">unit name</span></p>
+        <p>Open date: <span th:text="${openDate}">open date</span></p>
+        <p>Close date: <span th:text="${closeDate}">close date</span></p>
+        <p>Description: <span th:text="${description}">description</span></p>
+    </main>
+
+    <footer th:replace="template :: footer-auth"></footer>
 </body>
 </html>

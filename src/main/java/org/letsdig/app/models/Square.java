@@ -19,7 +19,7 @@ public class Square extends AbstractLetsDigEntity {
     private int nextUnitNumber;
     private List<Unit> units;
 
-    public Square(int gridId, int columnNumber, int rowNumber, int nextUnitNumber) {
+    public Square(int gridId, int columnNumber, int rowNumber) {
         this.gridId = gridId;
         this.columnNumber = columnNumber;
         this.rowNumber = rowNumber;
@@ -71,7 +71,7 @@ public class Square extends AbstractLetsDigEntity {
         this.nextUnitNumber = nextUnitNumber;
     }
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "square_id")
     public List<Unit> getUnits() {
         return units;
@@ -83,7 +83,7 @@ public class Square extends AbstractLetsDigEntity {
 
     /***************** OTHER METHODS **************************/
 
-    Unit openNewUnit() {
+    public Unit openNewUnit() {
 
         // generate new Unit that references this Square
         Unit newUnit = new Unit(this.getUid(), this.nextUnitNumber);
@@ -93,5 +93,10 @@ public class Square extends AbstractLetsDigEntity {
 
         // return the new Unit
         return newUnit;
+    }
+
+    @Override
+    public String toString() {
+        return this.columnNumber + "," + this.rowNumber;
     }
 }

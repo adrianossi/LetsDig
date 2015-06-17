@@ -125,3 +125,21 @@ form.frontdoor {
 main.frontdoor {
     width: 70%;
 }
+
+.header-foyer div {
+    display: inline-block;
+}
+
+#header-left {
+    text-align: left;
+    float: left;
+}
+
+#header-center {
+    text-align: center;
+}
+
+#header-right {
+    text-align: right;
+    float: right;
+}

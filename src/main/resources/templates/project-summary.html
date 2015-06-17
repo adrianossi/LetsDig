@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+<header th:replace="template :: header-foyer"></header>
+
+<main class="centered">
+    <h3>Project overview</h3>
+    <h4><a href="/projectview">Settings</a></h4>
+    <p>Grid: <span th:text="${gridMessage}"></span></p>
+    <p>Squares under excavation: <span th:text="${numSquares}"></span></p>
+    <p>Total units: <span th:text="${totalUnits}"></span></p>
+    <p>Units closed: <span th:text="${closedUnits}"></span></p>
+    <p>Units currently open: <span th:text="${openUnits}"></span></p>
+
+
+    <form class="landing" method="post" action="/unit-opennew">
+        Open new unit in square X, Y
+        <fieldset>
+            <input autofocus="true" class="form-control" name="squareId" placeholder="Square (e.g. 34, 9)" type="text"/>
+            <button type="submit">Let's dig!</button>
+        </fieldset>
+    </form>
+    <form class="landing" method="post" action="/unit-continue">
+        Continue existing unit
+        <fieldset>
+            <select name="unitId">
+                <option disabled="disabled" selected="selected">Select Unit</option>
+                <option th:if="${#maps.isEmpty(availableUnits)}"
+                        th:text="'No projects found'"
+                        th:disabled="disabled"></option>
+                <option th:if="${not #maps.isEmpty(availableUnits)}"
+                        th:each="availableUnit : ${availableUnits}"
+                        th:value="${availableUnit.key}"
+                        th:text="${availableUnit.value}">(No projects available)</option>
+            </select>
+            <button type="submit">Continue digging</button>
+        </fieldset>
+    </form>
+</main>
+
+<footer th:replace="template :: footer-auth"></footer>
+</body>
+</html>

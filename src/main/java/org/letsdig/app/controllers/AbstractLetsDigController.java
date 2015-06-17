@@ -43,6 +43,7 @@ public abstract class AbstractLetsDigController {
 
     // static property for user identification
     public static final String userSessionKey = "user_id";
+    public static final String projectSessionKey = "project_id";
 
     // method for any given controller in the app to display an error
     public String displayError(String message, Model model) {
@@ -60,10 +61,11 @@ public abstract class AbstractLetsDigController {
         return userDao.findByUid(getUserIdFromSession(request));
     }
 
-
-/*  TODO delete this failed attempt to store project in session
-    // method for any controller to get the current project id
+ /*   // method for any controller to get the current project id
     public int getProjectIdFromSession(HttpServletRequest request) {
+        return (int)request.getSession().getAttribute(projectSessionKey);
+
+         TODO delete this failed attempt to store project in session
         int key;
 
         try {
@@ -73,13 +75,15 @@ public abstract class AbstractLetsDigController {
             e.printStackTrace();
             return 0;
         }
+
     }
 
     // method for any controller to get the current Project object
     public Project getProjectFromSession(HttpServletRequest request) {
         return projectDao.findByUid(getProjectIdFromSession(request));
     }
-*/
+
+ */
 
     public LatLong lookupLatLong(double latitude, double longitude) {
 

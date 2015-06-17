@@ -15,14 +15,14 @@ public class Unit extends AbstractLetsDigEntity {
     private int squareId;
     private int number;
     private Date openDate;
-//    private Date closeDate;
+    private Date closeDate;
     private String description;
 
     public Unit(int squareId, int number) {
         this.squareId = squareId;
         this.number = number;
         this.openDate = new Date();
-    //    this.closeDate = null;
+        this.closeDate = null;
         this.description = null;
     }
 
@@ -71,10 +71,18 @@ public class Unit extends AbstractLetsDigEntity {
         this.description = description;
     }
 
+    @Column(name = "close_date")
+    public Date getCloseDate() {
+        return closeDate;
+    }
+
+    public void setCloseDate(Date closeDate) {
+        this.closeDate = closeDate;
+    }
+
     /**
      *              ----- OTHER METHODS ------
      */
-
 
 }
 
