@@ -1,8 +1,6 @@
 package org.letsdig.app.controllers;
 
-import org.letsdig.app.models.LatLong;
-import org.letsdig.app.models.Project;
-import org.letsdig.app.models.User;
+import org.letsdig.app.models.*;
 import org.letsdig.app.models.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -44,6 +42,7 @@ public abstract class AbstractLetsDigController {
     // static property for user identification
     public static final String userSessionKey = "user_id";
     public static final String projectSessionKey = "project_id";
+    public static final String unitSessionKey = "unit_id";
 
     // method for any given controller in the app to display an error
     public String displayError(String message, Model model) {
@@ -51,8 +50,12 @@ public abstract class AbstractLetsDigController {
         return errorTemplateIdentifier;
     }
 
+    /**
+     *     METHODS ON --USER-- IN SESSION
+     */
+
     // method for any controller to get the current user's id
-    public int getUserIdFromSession(HttpServletRequest request) {
+    public static int getUserIdFromSession(HttpServletRequest request) {
         return (int)request.getSession().getAttribute(userSessionKey);
     }
 
@@ -61,31 +64,77 @@ public abstract class AbstractLetsDigController {
         return userDao.findByUid(getUserIdFromSession(request));
     }
 
- /*   // method for any controller to get the current project id
-    public int getProjectIdFromSession(HttpServletRequest request) {
+    /**
+     *      METHODS ON --PROJECT-- IN SESSION
+     */
+
+    // method to check if a project is active
+    public static boolean aProjectIsActive(HttpServletRequest request) {
+        return request.getSession().getAttribute(projectSessionKey) != null;
+    }
+
+    // method for any controller to get the current project id
+    public static int getProjectIdFromSession(HttpServletRequest request) {
         return (int)request.getSession().getAttribute(projectSessionKey);
+    }
 
-         TODO delete this failed attempt to store project in session
-        int key;
+    // method for any controller to get the active Project object
+    public Project getActiveProject(HttpServletRequest request) throws ProjectAccessException {
 
-        try {
-            key = (int) request.getSession().getAttribute(projectSessionKey);
-            return key;
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            return 0;
+        // check if a project is active
+        if (!aProjectIsActive(request)) {
+            throw new ProjectAccessException("No active project found.");
         }
 
+        // get the active project from the db
+        Project project = projectDao.findByUid(getProjectIdFromSession(request));
+
+        // validate project
+        if (project == null) {
+            throw new ProjectAccessException("Error loading project.");
+        }
+
+        return project;
     }
 
-    // method for any controller to get the current Project object
-    public Project getProjectFromSession(HttpServletRequest request) {
-        return projectDao.findByUid(getProjectIdFromSession(request));
+    /**
+     *          METHODS ON --UNIT-- IN SESSION
+     */
+
+    // method to check if a unit is active
+    public static boolean aUnitIsActive(HttpServletRequest request) {
+        return request.getSession().getAttribute(unitSessionKey) != null;
     }
 
- */
+    // method for any controller to get the current unit id
+    public static int getUnitIdFromSession(HttpServletRequest request) {
+        return (int)request.getSession().getAttribute(unitSessionKey);
+    }
 
-    public LatLong lookupLatLong(double latitude, double longitude) {
+    // method for any controller to get the active Unit object
+    public Unit getActiveUnit(HttpServletRequest request) throws UnitAccessException {
+
+        // check if a unit is active
+        if (!aUnitIsActive(request)) {
+            throw new UnitAccessException("No active unit found.");
+        }
+
+        // get the active unit from the db
+        Unit unit = unitDao.findByUid(getUnitIdFromSession(request));
+
+        // validate unit
+        if (unit == null) {
+            throw new UnitAccessException("Error loading unit.");
+        }
+
+        return unit;
+    }
+
+    /**
+     *          METHODS ON --LATLONG--
+     */
+
+    public LatLong getOrCreateLatLong(double latitude, double longitude) {
 
         LatLong newLocation;
 

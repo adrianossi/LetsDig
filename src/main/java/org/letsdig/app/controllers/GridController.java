@@ -3,12 +3,14 @@ package org.letsdig.app.controllers;
 import org.letsdig.app.models.Grid;
 import org.letsdig.app.models.LatLong;
 import org.letsdig.app.models.Project;
+import org.letsdig.app.models.ProjectAccessException;
 import org.letsdig.app.models.util.LatLongUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -19,17 +21,15 @@ import javax.servlet.http.HttpSession;
 public class GridController extends AbstractLetsDigController {
 
     @RequestMapping(value = "/setgrid-viewform")
-    public String setGrid(Model model, HttpSession session) {
-        // check if session has a project
-        if (session.getAttribute("project") == null) {
-            return "projects";
-        }
+    public String setGrid(Model model,
+                          HttpServletRequest request) {
 
-        // get and verify project from session
-        Project project = (Project)session.getAttribute("project");
+        Project project;
 
-        if (project == null) {
-            model.addAttribute("message", "Error loading project.");
+        try {
+            project = getActiveProject(request);
+        } catch (ProjectAccessException e) {
+            model.addAttribute("message", e.getMessage());
             return "error";
         }
 
@@ -41,23 +41,19 @@ public class GridController extends AbstractLetsDigController {
     @RequestMapping(value = "/setgrid-execute", method = RequestMethod.POST)
     public String setGrid(
             Model model,
-            HttpSession session,
+            HttpServletRequest request,
             String latitude,
             String longitude,
             String bgSqSize,
             String bgNumRows,
             String bgNumCols) {
 
-        // check if session has a project
-        if (session.getAttribute("project") == null) {
-            return "projects";
-        }
+        Project project;
 
-        // get and verify project from session
-        Project project = (Project)session.getAttribute("project");
-
-        if (project == null) {
-            model.addAttribute("message", "Error loading project.");
+        try {
+            project = getActiveProject(request);
+        } catch (ProjectAccessException e) {
+            model.addAttribute("message", e.getMessage());
             return "error";
         }
 
@@ -65,7 +61,7 @@ public class GridController extends AbstractLetsDigController {
 
         // validate lat/long input
         if (LatLongUtils.isValidLatLong(latitude, longitude)){
-            location = this.lookupLatLong(Double.valueOf(latitude), Double.valueOf(longitude));
+            location = this.getOrCreateLatLong(Double.valueOf(latitude), Double.valueOf(longitude));
             latLongDao.save(location);
         } else {
             model.addAttribute("message", "Invalid location. Please try again.");
@@ -84,7 +80,7 @@ public class GridController extends AbstractLetsDigController {
 
         if (project.getGrid().getUid() == newGrid.getUid() &&
                 newGrid.getProject().getUid() == project.getUid()) {
-            return "redirect:projectview";
+            return "redirect:project-summary";
         } else {
             model.addAttribute("message", "Error saving data.");
             return "error";

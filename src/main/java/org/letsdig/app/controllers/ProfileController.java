@@ -120,7 +120,7 @@ public class ProfileController extends AbstractLetsDigController {
             }
 
             // get the LatLong from the db
-            LatLong newLocation = this.lookupLatLong(Double.valueOf(latitude), Double.valueOf(longitude));
+            LatLong newLocation = this.getOrCreateLatLong(Double.valueOf(latitude), Double.valueOf(longitude));
 
             // set LatLong as user's location and save both
             latLongDao.save(newLocation);

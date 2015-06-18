@@ -1,3 +1,4 @@
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/ProjectAccessException.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/Square.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/util/PasswordHash.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/LatLongController.java
@@ -8,6 +9,7 @@
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/util/LatLongUtils.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/UnitController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/AbstractLetsDigEntity.java
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/UnitAccessException.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/AuthenticationController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/Project.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/ProjectDao.java
@@ -19,6 +21,7 @@
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/controllers/GridController.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/LatLong.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/Grid.java
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/util/GridUtils.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/LetsDigApplication.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/GridDao.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/LatLongDao.java

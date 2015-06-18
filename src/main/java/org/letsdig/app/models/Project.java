@@ -68,7 +68,7 @@ public class Project extends AbstractLetsDigEntity {
         this.location = location;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     public Grid getGrid() {
         return grid;
     }
@@ -77,15 +77,13 @@ public class Project extends AbstractLetsDigEntity {
         this.grid = grid;
     }
 
-/*    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "project_id")
-    public List<Unit> getUnits() {
-        return units;
-    }
+    public String gimmeDisplayName() {
 
-    public void setUnits(List<Unit> units) {
-        this.units = units;
+        if (fullName != null) {
+            return fullName;
+        }
+
+        return name;
     }
-*/
 
 }

@@ -1,6 +1,7 @@
 package org.letsdig.app.models;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 

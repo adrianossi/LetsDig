@@ -9,7 +9,7 @@
 
 <main class="centered">
     <h3>Project overview</h3>
-    <h4><a href="/projectview">Settings</a></h4>
+    <h4><a href="/project-settings">Settings</a></h4>
     <p>Grid: <span th:text="${gridMessage}"></span></p>
     <p>Squares under excavation: <span th:text="${numSquares}"></span></p>
     <p>Total units: <span th:text="${totalUnits}"></span></p>
@@ -20,7 +20,7 @@
     <form class="landing" method="post" action="/unit-opennew">
         Open new unit in square X, Y
         <fieldset>
-            <input autofocus="true" class="form-control" name="squareId" placeholder="Square (e.g. 34, 9)" type="text"/>
+            <input autofocus="true" class="form-control" name="squareCoords" placeholder="Square (e.g. 34, 9)" type="text"/>
             <button type="submit">Let's dig!</button>
         </fieldset>
     </form>
@@ -30,12 +30,12 @@
             <select name="unitId">
                 <option disabled="disabled" selected="selected">Select Unit</option>
                 <option th:if="${#maps.isEmpty(availableUnits)}"
-                        th:text="'No projects found'"
+                        th:text="'No units found'"
                         th:disabled="disabled"></option>
                 <option th:if="${not #maps.isEmpty(availableUnits)}"
                         th:each="availableUnit : ${availableUnits}"
                         th:value="${availableUnit.key}"
-                        th:text="${availableUnit.value}">(No projects available)</option>
+                        th:text="${availableUnit.value}">(No units available)</option>
             </select>
             <button type="submit">Continue digging</button>
         </fieldset>

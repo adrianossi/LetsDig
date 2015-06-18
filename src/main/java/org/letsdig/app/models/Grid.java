@@ -103,4 +103,26 @@ public class Grid extends AbstractLetsDigEntity {
         return this.getOrigin().getLatitude() + ", " + this.getOrigin().getLongitude();
     }
 
+
+
+    public Square getOrCreateSquare(int colNum, int rowNum) {
+        if (    colNum < 0 ||
+                colNum > this.bigGridNumCols ||
+                rowNum < 0 ||
+                rowNum > this.bigGridNumRows) {
+
+                   return null;
+        }
+
+        List<Square> existingSquares = this.getSquares();
+
+        for (Square square : existingSquares) {
+            if (square.getColumnNumber() == colNum && square.getRowNumber() == rowNum) {
+                return square;
+            }
+        }
+
+        return new Square(this.getUid(), colNum, rowNum);
+    }
+
 }

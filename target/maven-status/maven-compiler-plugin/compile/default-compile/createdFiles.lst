@@ -13,13 +13,16 @@ org/letsdig/app/models/util/LatLongUtils.class
 org/letsdig/app/controllers/AbstractLetsDigController.class
 org/letsdig/app/models/Square.class
 org/letsdig/app/models/dao/SquareDao.class
+org/letsdig/app/models/util/GridUtils.class
 org/letsdig/app/models/UnitParameterException.class
 org/letsdig/app/controllers/GridController.class
 org/letsdig/app/models/AbstractLetsDigEntity.class
 org/letsdig/app/WebApplicationConfig.class
+org/letsdig/app/models/UnitAccessException.class
 org/letsdig/app/models/dao/ProjectDao.class
 org/letsdig/app/controllers/UnitController.class
 org/letsdig/app/models/Unit.class
 org/letsdig/app/models/Grid.class
+org/letsdig/app/models/ProjectAccessException.class
 org/letsdig/app/models/dao/UserDao.class
 org/letsdig/app/models/Project.class
