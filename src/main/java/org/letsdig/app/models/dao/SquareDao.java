@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface SquareDao extends CrudRepository<Square, Integer> {
 
-    Square findByUid(int uid);
+    Square findById(int id);
 
     Square findByGridId(int gridId);
 

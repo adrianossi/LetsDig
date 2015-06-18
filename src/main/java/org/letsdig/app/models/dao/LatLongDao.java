@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface LatLongDao extends CrudRepository<LatLong, Integer> {
 
-    LatLong findByUid(int uid);
+    LatLong findById(int id);
 
     LatLong findByLatitudeAndLongitude(double latitude, double longitude);
 }

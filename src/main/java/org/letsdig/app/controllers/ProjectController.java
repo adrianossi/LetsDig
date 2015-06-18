@@ -73,7 +73,7 @@ public class ProjectController extends AbstractLetsDigController {
         projectDao.save(currentProject);
 
         // load project into session
-        request.getSession().setAttribute(projectSessionKey, currentProject.getUid());
+        request.getSession().setAttribute(projectSessionKey, currentProject.getId());
 
         return "redirect:project-settings";
     }
@@ -200,7 +200,7 @@ public class ProjectController extends AbstractLetsDigController {
         }
 
         // load project into session
-        request.getSession().setAttribute(projectSessionKey, currentProject.getUid());
+        request.getSession().setAttribute(projectSessionKey, currentProject.getId());
 
         return "redirect:project-summary";
     }
@@ -274,7 +274,7 @@ public class ProjectController extends AbstractLetsDigController {
                     }
 
                     // put Unit uid and name into map
-                    unitIdsAndNames.put(unit.getUid(), "(" + squareName + ")" + unit.getNumber());
+                    unitIdsAndNames.put(unit.getId(), "(" + squareName + ")" + unit.getNumber());
                 }
             }
 

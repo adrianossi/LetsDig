@@ -49,7 +49,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         userDao.save(newUser);
 
         // Log the user into the session
-        request.getSession().setAttribute(userSessionKey, newUser.getUid());
+        request.getSession().setAttribute(userSessionKey, newUser.getId());
 
         // Store user's name
         model.addAttribute("displayName", newUser.gimmeDisplayName());
@@ -86,7 +86,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         }
 
         // User and password are verified, so log the user into the session
-        request.getSession().setAttribute(userSessionKey, existingUser.getUid());
+        request.getSession().setAttribute(userSessionKey, existingUser.getId());
 
         // add user's name to model
         model.addAttribute("displayName", existingUser.gimmeDisplayName());

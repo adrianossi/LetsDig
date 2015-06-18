@@ -14,5 +14,5 @@ import javax.transaction.Transactional;
 @Repository
 public interface UnitDao extends CrudRepository<Unit, Integer> {
 
-    Unit findByUid(int unitId);
+    Unit findById(int id);
 }

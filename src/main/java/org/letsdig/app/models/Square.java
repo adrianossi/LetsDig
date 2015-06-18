@@ -1,6 +1,7 @@
 package org.letsdig.app.models;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +14,14 @@ import java.util.List;
 @Table(name = "squares")
 public class Square extends AbstractLetsDigEntity {
 
-    private int gridId;
+    private Grid grid;
     private int columnNumber;
     private int rowNumber;
     private int nextUnitNumber;
     private List<Unit> units;
 
-    public Square(int gridId, int columnNumber, int rowNumber) {
-        this.gridId = gridId;
+    public Square(Grid grid, int columnNumber, int rowNumber) {
+        this.grid = grid;
         this.columnNumber = columnNumber;
         this.rowNumber = rowNumber;
         this.nextUnitNumber = 1;
@@ -32,13 +33,13 @@ public class Square extends AbstractLetsDigEntity {
     /******************** GETTERS AND SETTERS **********************/
 
     @NotNull
-    @Column(name = "grid_id")
-    public int getGridId() {
-        return gridId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Grid getGrid() {
+        return grid;
     }
 
-    public void setGridId(int gridId) {
-        this.gridId = gridId;
+    public void setGrid(Grid grid) {
+        this.grid = grid;
     }
 
     @NotNull
@@ -71,8 +72,7 @@ public class Square extends AbstractLetsDigEntity {
         this.nextUnitNumber = nextUnitNumber;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "square_id")
+    @OneToMany(mappedBy = "square")
     public List<Unit> getUnits() {
         return units;
     }
@@ -86,7 +86,7 @@ public class Square extends AbstractLetsDigEntity {
     public Unit openNewUnit() {
 
         // generate new Unit that references this Square
-        Unit newUnit = new Unit(this.getUid(), this.nextUnitNumber);
+        Unit newUnit = new Unit(this, this.nextUnitNumber);
 
         // increment number counter for next new Unit
         this.nextUnitNumber++;

@@ -76,7 +76,7 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
-        request.getSession().setAttribute(unitSessionKey, newUnit.getUid());
+        request.getSession().setAttribute(unitSessionKey, newUnit.getId());
 
         return "redirect:unit-sheet";
     }
@@ -87,14 +87,14 @@ public class UnitController extends AbstractLetsDigController {
             Model model,
             HttpServletRequest request){
 
-        Unit unit = unitDao.findByUid(Integer.valueOf(unitId));
+        Unit unit = unitDao.findById(Integer.valueOf(unitId));
 
         if (unit == null) {
             model.addAttribute("message", "Error loading unit.");
             return "error";
         }
 
-        request.getSession().setAttribute(unitSessionKey, unit.getUid());
+        request.getSession().setAttribute(unitSessionKey, unit.getId());
 
         return "redirect:unit-sheet";
     }
@@ -104,14 +104,14 @@ public class UnitController extends AbstractLetsDigController {
             Model model,
             HttpServletRequest request){
 
-        Unit unit = unitDao.findByUid((int)request.getSession().getAttribute(unitSessionKey));
+        Unit unit = unitDao.findById((int) request.getSession().getAttribute(unitSessionKey));
 
         if (unit == null) {
             model.addAttribute("message", "Error loading unit.");
             return "error";
         }
 
-        Square square = squareDao.findByUid(unit.getSquareId());
+        Square square = unit.getSquare();
 
         if (square == null) {
             model.addAttribute("message", "Error loading square.");
@@ -147,23 +147,22 @@ public class UnitController extends AbstractLetsDigController {
         return "unit-sheet";
     }
 
+    @RequestMapping(value = "/unit-close")
+    public String closeUnit(HttpServletRequest request, Model model) {
 
+        Unit unit = unitDao.findById((int) request.getSession().getAttribute(unitSessionKey));
 
-    private Square parseGridIdAndSquareId(int gridId, String squareId){
-
-        String delims = "[ ,]+";
-        String[] squareCoords = squareId.split(delims);
-        int col = Integer.valueOf(squareCoords[0]);
-        int row = Integer.valueOf(squareCoords[1]);
-
-        Square square = squareDao.findByGridIdAndColumnNumberAndRowNumber(gridId, col, row);
-
-        if (square == null) {
-            square = new Square(gridId, col, row);
-            squareDao.save(square);
+        if (unit == null) {
+            model.addAttribute("message", "Error loading unit.");
+            return "error";
         }
 
-        return square;
-    }
+        unit.close();
 
+        unitDao.save(unit);
+
+        request.getSession().removeAttribute(unitSessionKey);
+
+        return "redirect:/project-summary";
+    }
 }

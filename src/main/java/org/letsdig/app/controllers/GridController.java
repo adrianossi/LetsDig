@@ -78,8 +78,8 @@ public class GridController extends AbstractLetsDigController {
 
         projectDao.save(project);
 
-        if (project.getGrid().getUid() == newGrid.getUid() &&
-                newGrid.getProject().getUid() == project.getUid()) {
+        if (project.getGrid().getId() == newGrid.getId() &&
+                newGrid.getProject().getId() == project.getId()) {
             return "redirect:project-summary";
         } else {
             model.addAttribute("message", "Error saving data.");

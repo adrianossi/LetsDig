@@ -15,16 +15,16 @@ import javax.persistence.MappedSuperclass;
 public abstract class AbstractLetsDigEntity {
 
     // unique identifier
-    private int uid;
+    private int id;
 
-    @Id // uid is the table's primary key
-    @GeneratedValue // uid is autoincremented
-    @Column(name = "uid", unique = true, nullable = false)
-    public int getUid() {
-        return uid;
+    @Id // id is the table's primary key
+    @GeneratedValue // id is autoincremented
+    @Column(name = "id", unique = true, nullable = false)
+    public int getId() {
+        return id;
     }
 
-    protected void setUid(int uid) {
-        this.uid = uid;
+    protected void setId(int id) {
+        this.id = id;
     }
 }

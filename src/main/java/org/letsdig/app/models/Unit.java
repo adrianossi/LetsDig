@@ -13,14 +13,14 @@ import java.util.Date;
 @Table(name = "units")
 public class Unit extends AbstractLetsDigEntity {
 
-    private int squareId;
+    private Square square;
     private int number;
     private Date openDate;
     private Date closeDate;
     private String description;
 
-    public Unit(int squareId, int number) {
-        this.squareId = squareId;
+    public Unit(Square square, int number) {
+        this.square = square;
         this.number = number;
         this.openDate = new Date();
         this.closeDate = null;
@@ -34,13 +34,13 @@ public class Unit extends AbstractLetsDigEntity {
      */
 
     @NotNull
-    @Column(name = "square_id")
-    public int getSquareId() {
-        return squareId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public Square getSquare() {
+        return square;
     }
 
-    public void setSquareId(int squareId) {
-        this.squareId = squareId;
+    public void setSquare(Square square) {
+        this.square = square;
     }
 
     @NotNull
@@ -85,5 +85,8 @@ public class Unit extends AbstractLetsDigEntity {
      *              ----- OTHER METHODS ------
      */
 
+    public void close() {
+        this.closeDate = new Date();
+    }
 }
 

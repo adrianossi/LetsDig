@@ -45,7 +45,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
         // double check user validity by querying db
         if (isPresentValidUser) {
-            User user = userDao.findByUid(userId);
+            User user = userDao.findById(userId);
 
             if (user == null) {
                 isPresentValidUser = false;

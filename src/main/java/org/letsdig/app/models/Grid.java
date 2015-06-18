@@ -85,8 +85,7 @@ public class Grid extends AbstractLetsDigEntity {
         this.bigGridSquareSize = bigGridSquareSize;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "grid_id")
+    @OneToMany(mappedBy = "grid")
     public List<Square> getSquares() {
         return squares;
     }
@@ -122,7 +121,7 @@ public class Grid extends AbstractLetsDigEntity {
             }
         }
 
-        return new Square(this.getUid(), colNum, rowNum);
+        return new Square(this, colNum, rowNum);
     }
 
 }

@@ -61,7 +61,7 @@ public abstract class AbstractLetsDigController {
 
     // method for any controller to get the current User object
     public User getUserFromSession(HttpServletRequest request) {
-        return userDao.findByUid(getUserIdFromSession(request));
+        return userDao.findById(getUserIdFromSession(request));
     }
 
     /**
@@ -87,7 +87,7 @@ public abstract class AbstractLetsDigController {
         }
 
         // get the active project from the db
-        Project project = projectDao.findByUid(getProjectIdFromSession(request));
+        Project project = projectDao.findById(getProjectIdFromSession(request));
 
         // validate project
         if (project == null) {
@@ -120,7 +120,7 @@ public abstract class AbstractLetsDigController {
         }
 
         // get the active unit from the db
-        Unit unit = unitDao.findByUid(getUnitIdFromSession(request));
+        Unit unit = unitDao.findById(getUnitIdFromSession(request));
 
         // validate unit
         if (unit == null) {
@@ -151,4 +151,6 @@ public abstract class AbstractLetsDigController {
         // return the valid LatLong
         return newLocation;
     }
+
+
 }

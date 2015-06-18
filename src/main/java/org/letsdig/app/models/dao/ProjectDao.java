@@ -17,5 +17,5 @@ public interface ProjectDao extends CrudRepository<Project, Integer> {
 
     Project findByDirectorIdAndName(int director_id, String name);
 
-    Project findByUid(int project_id);
+    Project findById(int id);
 }
