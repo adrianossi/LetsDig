@@ -2,6 +2,7 @@ package org.letsdig.app.controllers;
 
 import org.letsdig.app.models.*;
 import org.letsdig.app.models.util.LatLongUtils;
+import org.letsdig.app.models.util.UnitSorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -238,7 +239,6 @@ public class ProjectController extends AbstractLetsDigController {
 
             model.addAttribute("gridMessage", "Origin " + grid.originToString());
 
-            // FIXME: returns too many squares-- one square for every unit in the existing squares
             // get squares from the grid
             List<Square> squares = grid.getSquares();
 
@@ -252,7 +252,13 @@ public class ProjectController extends AbstractLetsDigController {
             // variables and map to count Units and create uid => name map
             int closedUnits = 0;
             int openUnits = 0;
-            Map<Integer, String> unitIdsAndNames = new HashMap<>();
+
+            // sorter to properly sort units when presented
+            // in the format "(colNum, rowNum)unitNum"
+            UnitSorter unitSorter = new UnitSorter();
+
+            // TreeMap to store ordered unit names => unitId
+            Map<String, Integer> unitNamesAndIds = new TreeMap<>(unitSorter);
 
             // iterate over squares
             for (Square square : squares) {
@@ -268,20 +274,24 @@ public class ProjectController extends AbstractLetsDigController {
 
                     // count open vs. closed Units
                     if (unit.getCloseDate() == null) {
+
+                        // count open units
                         openUnits++;
+
+                        // put open unit ids and names into map
+                        unitNamesAndIds.put("(" + squareName + ")" + unit.getNumber(), unit.getId());
+
                     } else {
+                        // count closed units
                         closedUnits++;
                     }
-
-                    // put Unit uid and name into map
-                    unitIdsAndNames.put(unit.getId(), "(" + squareName + ")" + unit.getNumber());
                 }
             }
 
             model.addAttribute("totalUnits", openUnits + closedUnits);
             model.addAttribute("openUnits", openUnits);
             model.addAttribute("closedUnits", closedUnits);
-            model.addAttribute("availableUnits", unitIdsAndNames);
+            model.addAttribute("availableUnits", unitNamesAndIds);
         }
 
         return "project-summary";

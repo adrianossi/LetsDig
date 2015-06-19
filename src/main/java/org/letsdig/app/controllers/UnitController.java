@@ -41,7 +41,6 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
-        // FIXME an exception happens in GridUtils.getColFromCoords
         Square square = grid.getOrCreateSquare(
                 GridUtils.getColFromCoords(squareCoords),
                 GridUtils.getRowFromCoords(squareCoords));
@@ -60,9 +59,6 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
-        // FIXME when project-summary reloads after a new
-        // unit has been made, the "existing units" list does not
-        // contain the new unit.
         unitDao.save(newUnit);
         squareDao.save(square);
         gridDao.save(grid);

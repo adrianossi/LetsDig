@@ -2,6 +2,7 @@ org/letsdig/app/controllers/ProjectController.class
 org/letsdig/app/models/dao/UnitDao.class
 org/letsdig/app/LetsDigApplication.class
 org/letsdig/app/models/dao/GridDao.class
+org/letsdig/app/models/util/UnitSorter.class
 org/letsdig/app/controllers/LatLongController.class
 org/letsdig/app/models/User.class
 org/letsdig/app/controllers/AuthenticationController.class

@@ -34,8 +34,8 @@
                         th:disabled="disabled"></option>
                 <option th:if="${not #maps.isEmpty(availableUnits)}"
                         th:each="availableUnit : ${availableUnits}"
-                        th:value="${availableUnit.key}"
-                        th:text="${availableUnit.value}">(No units available)</option>
+                        th:value="${availableUnit.value}"
+                        th:text="${availableUnit.key}">(No units available)</option>
             </select>
             <button type="submit">Continue digging</button>
         </fieldset>
