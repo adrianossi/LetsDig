@@ -12,9 +12,9 @@
     <h4><a href="/project-settings">Settings</a></h4>
     <p>Grid: <span th:text="${gridMessage}"></span></p>
     <p>Squares under excavation: <span th:text="${numSquares}"></span></p>
-    <p>Total units: <span th:text="${totalUnits}"></span></p>
-    <p>Units closed: <span th:text="${closedUnits}"></span></p>
-    <p>Units currently open: <span th:text="${openUnits}"></span></p>
+    <p>Total units: <span th:text="${#sets.size(closedUnits) + #sets.size(openUnits)}"></span></p>
+    <p>Units closed: <span th:text="${#sets.size(closedUnits)}"></span></p>
+    <p>Units currently open: <span th:text="${#sets.size(openUnits)}"></span></p>
 
 
     <form class="landing" method="post" action="/unit-opennew">
@@ -29,17 +29,34 @@
         <fieldset>
             <select name="unitId">
                 <option disabled="disabled" selected="selected">Select Unit</option>
-                <option th:if="${#maps.isEmpty(availableUnits)}"
+                <option th:if="${#sets.isEmpty(openUnits)}"
                         th:text="'No units found'"
                         th:disabled="disabled"></option>
-                <option th:if="${not #maps.isEmpty(availableUnits)}"
-                        th:each="availableUnit : ${availableUnits}"
-                        th:value="${availableUnit.value}"
-                        th:text="${availableUnit.key}">(No units available)</option>
+                <option th:if="${not #sets.isEmpty(openUnits)}"
+                        th:each="openUnit : ${openUnits}"
+                        th:value="${openUnit.getId()}"
+                        th:text="${openUnit.gimmeName()}">(No units available)</option>
             </select>
             <button type="submit">Continue digging</button>
         </fieldset>
     </form>
+    <form class="landing" method="post" action="/unit-sheet-show">
+        Review closed unit
+        <fieldset>
+            <select name="unitId">
+                <option disabled="disabled" selected="selected">Select Unit</option>
+                <option th:if="${#sets.isEmpty(closedUnits)}"
+                        th:text="'No units found'"
+                        th:disabled="disabled"></option>
+                <option th:if="${not #sets.isEmpty(closedUnits)}"
+                        th:each="closedUnit : ${closedUnits}"
+                        th:value="${closedUnit.getId()}"
+                        th:text="${closedUnit.gimmeName()}">(No units available)</option>
+            </select>
+            <button type="submit">Review unit</button>
+        </fieldset>
+    </form>
+
 </main>
 
 <footer th:replace="template :: footer-auth"></footer>

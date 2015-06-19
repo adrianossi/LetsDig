@@ -88,5 +88,9 @@ public class Unit extends AbstractLetsDigEntity {
     public void close() {
         this.closeDate = new Date();
     }
+
+    public String gimmeName() {
+        return "(" + this.getSquare().toString() + ")" + this.getNumber();
+    }
 }
 

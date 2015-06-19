@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+    <header th:replace="template :: header-foyer"></header>
+
+    <main>
+        <p>Unit: <span th:text="${unitName}">unit name</span></p>
+        <p>Open date: <span th:text="${openDate}">open date</span></p>
+        <p>Close date: <span th:text="${closeDate}">close date</span></p>
+        <form action="/unit-sheet-edit" id="unit-sheet-form" method="post">
+            <fieldset>
+                <p>Description: <span th:text="${description}">description</span></p>
+                <textarea form="unit-sheet-form"
+                          name="description"
+                          cols="75"
+                          rows="10"
+                          placeholder="Enter description or add to existing description here."></textarea>
+                <button type="submit">Submit</button>
+            </fieldset>
+        </form>
+        <p><a href="/project-summary">Select a different unit.</a></p>
+    </main>
+
+    <footer th:replace="template :: footer-auth"></footer>
+</body>
+</html>

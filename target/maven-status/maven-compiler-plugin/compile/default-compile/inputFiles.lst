@@ -22,6 +22,7 @@
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/LatLong.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/Grid.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/util/GridUtils.java
+/Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/util/UnitSorter.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/LetsDigApplication.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/GridDao.java
 /Users/adrian/IdeaProjects/LetsDig/src/main/java/org/letsdig/app/models/dao/LatLongDao.java

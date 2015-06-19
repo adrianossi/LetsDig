@@ -2,6 +2,7 @@ package org.letsdig.app.controllers;
 
 import org.letsdig.app.models.*;
 import org.letsdig.app.models.util.LatLongUtils;
+import org.letsdig.app.models.util.UnitNameSorter;
 import org.letsdig.app.models.util.UnitSorter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -250,15 +250,18 @@ public class ProjectController extends AbstractLetsDigController {
             }
 
             // variables and map to count Units and create uid => name map
-            int closedUnits = 0;
-            int openUnits = 0;
+            int closedUnitCount = 0;
+            int openUnitCount = 0;
 
             // sorter to properly sort units when presented
             // in the format "(colNum, rowNum)unitNum"
+ //treemap           UnitNameSorter unitNameSorter = new UnitNameSorter();
             UnitSorter unitSorter = new UnitSorter();
 
             // TreeMap to store ordered unit names => unitId
-            Map<String, Integer> unitNamesAndIds = new TreeMap<>(unitSorter);
+ //treemap           Map<String, Integer> unitNamesAndIds = new TreeMap<>(unitNameSorter);
+            Set<Unit> openUnits = new TreeSet<>(unitSorter);
+            Set<Unit> closedUnits = new TreeSet<>(unitSorter);
 
             // iterate over squares
             for (Square square : squares) {
@@ -276,22 +279,26 @@ public class ProjectController extends AbstractLetsDigController {
                     if (unit.getCloseDate() == null) {
 
                         // count open units
-                        openUnits++;
+                        openUnitCount++;
 
-                        // put open unit ids and names into map
-                        unitNamesAndIds.put("(" + squareName + ")" + unit.getNumber(), unit.getId());
+                        // put open units into map
+                        openUnits.add(unit);
 
                     } else {
                         // count closed units
-                        closedUnits++;
+                        closedUnitCount++;
+
+                        // put closed units into map
+                        closedUnits.add(unit);
                     }
                 }
             }
 
-            model.addAttribute("totalUnits", openUnits + closedUnits);
+            model.addAttribute("totalUnits", openUnitCount + closedUnitCount);
+            model.addAttribute("openUnitCount", openUnitCount);
+            model.addAttribute("closedUnitCount", closedUnitCount);
             model.addAttribute("openUnits", openUnits);
             model.addAttribute("closedUnits", closedUnits);
-            model.addAttribute("availableUnits", unitNamesAndIds);
         }
 
         return "project-summary";
@@ -299,6 +306,8 @@ public class ProjectController extends AbstractLetsDigController {
 
     @RequestMapping(value = "/unloadproject")
     public String unloadProject(HttpServletRequest request) {
+
+        request.getSession().removeAttribute(unitSessionKey);
 
         request.getSession().removeAttribute(projectSessionKey);
 

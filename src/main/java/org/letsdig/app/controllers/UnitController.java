@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by adrian on 6/13/15.
@@ -74,7 +73,7 @@ public class UnitController extends AbstractLetsDigController {
 
         request.getSession().setAttribute(unitSessionKey, newUnit.getId());
 
-        return "redirect:unit-sheet";
+        return "redirect:unit-sheet-edit";
     }
 
     @RequestMapping(value="/unit-continue")
@@ -92,10 +91,69 @@ public class UnitController extends AbstractLetsDigController {
 
         request.getSession().setAttribute(unitSessionKey, unit.getId());
 
-        return "redirect:unit-sheet";
+        return "redirect:unit-sheet-edit";
     }
 
-    @RequestMapping(value="/unit-sheet", method=RequestMethod.GET)
+    @RequestMapping(value = "/unit-sheet-edit", method=RequestMethod.GET)
+    public String editUnitSheet(
+            HttpServletRequest request,
+            Model model) {
+
+        Unit unit = unitDao.findById((int)request.getSession().getAttribute(unitSessionKey));
+
+        if (unit == null) {
+            model.addAttribute("message", "Error loading unit.");
+            return "error";
+        }
+
+        model.addAttribute("unitName", unit.gimmeName());
+        model.addAttribute("openDate", unit.getOpenDate().toString());
+
+        if (unit.getCloseDate() != null) {
+            model.addAttribute("closeDate", unit.getCloseDate().toString());
+        } else {
+            model.addAttribute("closeDate", "Still open.");
+        }
+
+        if (unit.getDescription() != null) {
+            model.addAttribute("description", unit.getDescription());
+        } else {
+            model.addAttribute("description", "Empty.");
+        }
+
+        return "unit-sheet-form";
+    }
+
+    @RequestMapping(value="/unit-sheet-edit", method=RequestMethod.POST)
+    public String unitSheet(
+            Model model,
+            HttpServletRequest request,
+            String description){
+
+        Unit unit = unitDao.findById((int) request.getSession().getAttribute(unitSessionKey));
+
+        if (unit == null) {
+            model.addAttribute("message", "Error loading unit.");
+            return "error";
+        }
+
+        if (description != "") {
+
+            if (unit.getDescription() == null) {
+                unit.setDescription(description);
+            } else {
+                unit.setDescription(unit.getDescription() + " " + description);
+            }
+        }
+
+        unitDao.save(unit);
+
+        model.addAttribute("message", "Unit sheet updated.");
+
+        return "redirect:unit-sheet-show";
+    }
+
+    @RequestMapping(value="/unit-sheet-show", method=RequestMethod.GET)
     public String unitSheet(
             Model model,
             HttpServletRequest request){
@@ -107,14 +165,7 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
-        Square square = unit.getSquare();
-
-        if (square == null) {
-            model.addAttribute("message", "Error loading square.");
-            return "error";
-        }
-
-        model.addAttribute("unitName", "(" + square.toString() + ")" + unit.getNumber());
+        model.addAttribute("unitName", unit.gimmeName());
         model.addAttribute("openDate", unit.getOpenDate().toString());
 
         if (unit.getDescription() != null) {
@@ -129,18 +180,25 @@ public class UnitController extends AbstractLetsDigController {
             model.addAttribute("closeDate", "Still open.");
         }
 
-        return "unit-sheet";
+        return "unit-sheet-show";
     }
 
-    @RequestMapping(value="/unit-sheet", method=RequestMethod.POST)
+    @RequestMapping(value="/unit-sheet-show", method=RequestMethod.POST)
     public String unitSheet(
+            String unitId,
             Model model,
-            HttpSession session,
-            String description){
+            HttpServletRequest request){
 
-        //TODO implement updating unit sheet
+        Unit unit = unitDao.findById(Integer.valueOf(unitId));
 
-        return "unit-sheet";
+        if (unit == null) {
+            model.addAttribute("message", "Error loading unit.");
+        }
+
+        request.getSession().setAttribute(unitSessionKey, unit.getId());
+
+        return "redirect:unit-sheet-show";
+
     }
 
     @RequestMapping(value = "/unit-close")
@@ -159,6 +217,6 @@ public class UnitController extends AbstractLetsDigController {
 
         request.getSession().removeAttribute(unitSessionKey);
 
-        return "redirect:/project-summary";
+        return "redirect:project-summary";
     }
 }

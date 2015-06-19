@@ -1,3 +1,4 @@
+org/letsdig/app/models/util/UnitNameSorter.class
 org/letsdig/app/controllers/ProjectController.class
 org/letsdig/app/models/dao/UnitDao.class
 org/letsdig/app/LetsDigApplication.class

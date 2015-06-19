@@ -1,24 +1,30 @@
 package org.letsdig.app.models.util;
 
-import org.letsdig.app.models.Unit;
 
 import java.util.Comparator;
 
 /**
- * Created by adrian on 6/19/15.
+ * Created by adrian on 6/18/15.
  */
-public class UnitSorter implements Comparator<Unit> {
+public class UnitNameSorter implements Comparator<String> {
 
     @Override
-    public int compare(Unit a, Unit b) {
+    public int compare(String a, String b) {
 
-        int aCol = a.getSquare().getColumnNumber();
-        int aRow = a.getSquare().getRowNumber();
-        int aUnit = a.getNumber();
+        // String inputs will be: "(col, row)unit"
+        // like "(1,2)3" or "(45,3)91"
 
-        int bCol = b.getSquare().getColumnNumber();
-        int bRow = b.getSquare().getRowNumber();
-        int bUnit = b.getNumber();
+        // split out integers (ends up {"", "45", "3", "91"})
+        String[] aSplit = a.split(GridUtils.coordDelims);
+        String[] bSplit = b.split(GridUtils.coordDelims);
+
+        int aCol = Integer.valueOf(aSplit[1]);
+        int aRow = Integer.valueOf(aSplit[2]);
+        int aUnit = Integer.valueOf(aSplit[3]);
+
+        int bCol = Integer.valueOf(bSplit[1]);
+        int bRow = Integer.valueOf(bSplit[2]);
+        int bUnit = Integer.valueOf(bSplit[3]);
 
         // check if cols are equal
         if (aCol == bCol) {
