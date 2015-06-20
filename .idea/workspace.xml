@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa1c414-5911-4898-a9f0-af600b4a7cad" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/LatLong.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/LatLong.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/LatLongController.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/LatLongController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProfileController.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProfileController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProjectController.java" afterPath="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProjectController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/profile.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/profile.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/templates/project-settings.html" afterPath="$PROJECT_DIR$/src/main/resources/templates/project-settings.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="LetsDig.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -90,11 +86,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project-summary.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="project-summary.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/templates/project-summary.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7880597">
-              <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
+            <state vertical-scroll-proportion="-7.806452">
+              <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.83870965">
+              <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -135,8 +141,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/util/LatLongUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/projectedit.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/DigController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/index.html" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/changepwd.html" />
@@ -179,13 +183,15 @@
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/UnitController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/unit-sheet-form.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/Unit.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/project-summary.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/LatLongController.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/models/LatLong.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/profile.html" />
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProfileController.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/letsdig/app/controllers/ProjectController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/project-settings.html" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/project-summary.html" />
+        <option value="$PROJECT_DIR$/src/.gitignore" />
       </list>
     </option>
   </component>
@@ -935,12 +941,12 @@
       <workItem from="1433172604822" duration="135138000" />
       <workItem from="1434039852155" duration="1955000" />
       <workItem from="1434047778927" duration="2682000" />
-      <workItem from="1434141721613" duration="90920000" />
+      <workItem from="1434141721613" duration="91296000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="230695000" />
+    <option name="totallyTimeSpent" value="231071000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -953,14 +959,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="23" width="1279" height="708" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32792208" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32792208" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1007,13 +1013,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/confirm.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4193548">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1446,8 +1445,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/project-summary.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7880597">
-          <caret line="34" column="16" selection-start-line="34" selection-start-column="16" selection-end-line="34" selection-end-column="16" />
+        <state vertical-scroll-proportion="-7.806452">
+          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.83870965">
+          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
           <folding />
         </state>
       </provider>
