@@ -9,13 +9,19 @@
 
 <main class="centered">
     <h3>User profile</h3> (<a href="profileedit.html">edit</a>)
-    <p>Username: <span th:text="${username}">empty</span></p>
+    <p>Username: <span
+            th:text="${user.getUsername()}">empty</span></p>
     <p>Password: (<a href="changepwd.html">change</a>)</p>
-    <p>First Name: <span th:text="${firstName}">empty</span></p>
-    <p>Last Name: <span th:text="${lastName}">empty</span></p>
-    <p>Latitude: <span th:text="${latitude}">empty</span></p>
-    <p>Longitude: <span th:text="${longitude}">empty</span></p>
-    <p><a href="/map" target="_blank">Map it!</a> (Opens a new window)</p>
+    <p>First Name: <span
+            th:if="${user.getFirstName() != null}"
+            th:text="${user.getFirstName()}">empty</span></p>
+    <p>Last Name: <span th:text="${user.getLastName()}">empty</span></p>
+
+    <p>Latitude: <span
+            th:if="${location != null}"
+            th:text="${location.getLatitude()}">empty</span></p>
+    <p>Longitude: <span th:text="${location.getLongitude()}">empty</span></p>
+    <iframe width="600" height="450" frameborder="0" style="border:0" th:src="${location.gimmeEmbedUrl()}"></iframe>
 </main>
 
 <footer th:replace="template :: footer-auth"></footer>

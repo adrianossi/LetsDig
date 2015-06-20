@@ -6,15 +6,18 @@
 
 <body>
     <header th:replace="template :: header-foyer"></header>
-
     <main class="centered">
         <h3>Project settings</h3> (<a href="/project-settings-edit">edit</a>)
-        <p>Project nickname: <span th:text="${projectName}">empty</span></p>
-        <p>Full name: <span th:text="${projectFullName}">empty</span></p>
-        <p>Latitude: <span th:text="${latitude}">empty</span></p>
-        <p>Longitude: <span th:text="${longitude}">empty</span></p>
-        <p><a href="/mapproject" target="_blank">Map it!</a> (Opens a new window)</p>
-        <p>Grid: <span th:text="${gridStatus}">empty</span></p>
+        <p>Project nickname: <span th:text="${project.name}">empty</span></p>
+        <p>Full name: <span th:text="*{project.fullName}?: 'empty'">empty</span></p>
+        <p>Latitude: <span th:text="*{location}? ${location.latitude} : 'empty'">empty</span></p>
+        <p>Longitude: <span th:text="*{location}? ${location.longitude} : 'empty'">empty</span></p>
+        <iframe width="600" height="450" frameborder="0" style="border:0"
+                th:src="*{location}? ${location.gimmeEmbedUrl()} : 'empty'"></iframe>
+
+        <!-- Note, project-summary template is broken too -->
+        <p>Grid: <span
+                th:text="*{grid}? 'Set with origin at ' + ${grid.origin.gimmeLocationString()} : 'Not set.'">Not set.></span></p>
         <p><a href="/setgrid-viewform">Set grid</a></p>
     </main>
 

@@ -94,25 +94,36 @@ public class ProjectController extends AbstractLetsDigController {
             return "error";
         }
 
-        // prep model
+        model.addAttribute("project", project);
+
+/*        // prep model
         model.addAttribute("projectName", project.getName());
 
         if (project.getFullName() != null) {
             model.addAttribute("projectFullName", project.getFullName());
         }
-
+*/
         if (project.getLocation() != null) {
+            model.addAttribute("location", project.getLocation());
+        }
+
+/*        if (project.getLocation() != null) {
             model.addAttribute("latitude", project.getLocation().getLatitude());
             model.addAttribute("longitude", project.getLocation().getLongitude());
         } else {
             model.addAttribute("latitude", "empty");
             model.addAttribute("longitude", "empty");
         }
+*/
+        if (project.getGrid() != null) {
+            model.addAttribute("grid", project.getGrid());
+        }
 
+/*
         if (project.getGrid() != null) {
             model.addAttribute("gridStatus", "Grid is set (origin: " + project.getGrid().originToString() + ")");
         }
-
+*/
         return "project-settings";
     }
 
@@ -312,31 +323,6 @@ public class ProjectController extends AbstractLetsDigController {
         request.getSession().removeAttribute(projectSessionKey);
 
         return "redirect:projects";
-    }
-
-    @RequestMapping(value = "/mapproject")
-    public String map(
-            HttpServletRequest request,
-            Model model) {
-
-        Project project;
-
-        try {
-            project = getActiveProject(request);
-
-        } catch (ProjectAccessException e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
-        }
-
-        LatLong location = project.getLocation();
-
-        if (location != null) {
-            return location.putOnMap();
-        } else {
-            model.addAttribute("message", "Location data not found.");
-            return "error";
-        }
     }
 
 }

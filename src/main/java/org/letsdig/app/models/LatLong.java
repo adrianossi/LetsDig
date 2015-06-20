@@ -1,12 +1,8 @@
 package org.letsdig.app.models;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.persistence.*;
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by adrian on 6/5/15.
@@ -33,7 +29,8 @@ public class LatLong extends AbstractLetsDigEntity {
     public LatLong () {}
 
     // static property for map redirect
-    private static final String baseGoogleMapsUrl = "https://www.google.com/maps/?q=";
+    private static final String googleMapsUrlPrefix = "https://www.google.com/maps/embed/v1/place?q=";
+    private static final String googleMapsUrlSuffix = "&key=AIzaSyCieHY69Y7AJbcWyOaLIshtlTVao0TyhAE";
 
     @Column(name = "latitude")
     public double getLatitude() {
@@ -84,8 +81,8 @@ public class LatLong extends AbstractLetsDigEntity {
         return this.getLatitude() + ", " + this.getLongitude();
     }
 
-    public String putOnMap() {
-            return "redirect:" + baseGoogleMapsUrl + this.getLatitude() + "," + this.getLongitude();
+    public String gimmeEmbedUrl() {
+        return googleMapsUrlPrefix + latitude + "," + longitude + googleMapsUrlSuffix;
     }
 
 }

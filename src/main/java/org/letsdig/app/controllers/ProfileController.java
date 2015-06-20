@@ -24,7 +24,7 @@ public class ProfileController extends AbstractLetsDigController {
         // get user's data from db
         User user = getUserFromSession(request);
 
-        // add new info to model
+/*        // add new info to model
         model.addAttribute("username", user.getUsername());
 
         model.addAttribute("displayName", user.gimmeDisplayName());
@@ -47,6 +47,13 @@ public class ProfileController extends AbstractLetsDigController {
         } else {
             model.addAttribute("latitude", "empty");
             model.addAttribute("longitude", "empty");
+        }
+*/
+        // add user to model
+        model.addAttribute("user", user);
+
+        if (user.getLocation() != null) {
+            model.addAttribute("location", user.getLocation());
         }
 
         // display the profile template
@@ -180,20 +187,6 @@ public class ProfileController extends AbstractLetsDigController {
 
             model.addAttribute("message", "Password updated.");
             return "confirm";
-        }
-    }
-
-    @RequestMapping(value = "/map")
-    public String map(HttpServletRequest request, Model model) {
-
-        // get user from db
-        User user = getUserFromSession(request);
-
-        if (user.getLocation() != null) {
-            return user.getLocation().putOnMap();
-        } else {
-            model.addAttribute("message", "Location data not found.");
-            return "error";
         }
     }
 }
