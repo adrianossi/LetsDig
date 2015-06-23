@@ -99,4 +99,24 @@ public class Square extends AbstractLetsDigEntity {
     public String toString() {
         return this.columnNumber + "," + this.rowNumber;
     }
+
+    public List<Unit> gimmeOpenUnits() {
+        List<Unit> openUnits = new ArrayList<>();
+        for (Unit unit: this.getUnits()) {
+            if (unit.getCloseDate() == null) {
+                openUnits.add(unit);
+            }
+        }
+        return openUnits;
+    }
+
+    public List<Unit> gimmeClosedUnits() {
+        List<Unit> closedUnits = new ArrayList<>();
+        for (Unit unit: this.getUnits()) {
+            if (unit.getCloseDate() != null) {
+                closedUnits.add(unit);
+            }
+        }
+        return closedUnits;
+    }
 }

@@ -8,16 +8,56 @@
 <header th:replace="template :: header-foyer">
 </header>
 <main class="centered">
-    <p id="greeting">Updating profile for <span class="displayName" th:text="${displayName}">User</span></p>
-    <form class="indoors" method="post" action="/profileedit">
+    <p id="greeting">Updating profile for <span class="displayName" th:text="${user}? ${user.toString()}">LetsDig User</span></p>
+    <form class="landing" id="profile-edit-form" method="post" action="/profileedit">
         <fieldset>
             <div class="form-group">
-                <input class="form-control" name="username" placeholder="Username" type="text" autofocus="true"/>
-                <input class="form-control" name="firstName" placeholder="First name" type="text"/>
-                <input class="form-control" name="lastName" placeholder="Last name" type="text"/>
-                <input class="form-control" name="latitude" placeholder="Latitude" type="number" step="0.0000001"/>
-                <input class="form-control" name="longitude" placeholder="Longitude" type="number" step="0.0000001"/>
-                <button type="submit">Submit</button>
+                <table>
+                    <tr>
+                        <td>
+                            <input class="form-control" name="username"
+                               placeholder="Username" type="text"
+                               autofocus="true"/>
+                        </td>
+                        <td th:text="${user.username}"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="form-control" name="firstName"
+                               placeholder="First name" type="text"/>
+                        </td>
+                        <td th:text="${user.firstName}?: 'empty'"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <input class="form-control" name="lastName"
+                               placeholder="Last name" type="text"/>
+                        </td>
+                        <td th:text="${user.lastName}?: 'empty'"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="form-control" name="latitude"
+                               placeholder="Latitude" type="number"
+                               step="0.0000001"/>
+                        </td>
+                        <td th:text="${location}? ${location.latitude} : 'empty'"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="form-control" name="longitude"
+                               placeholder="Longitude" type="number"
+                               step="0.0000001"/>
+                        </td>
+                        <td th:text="${location}? ${location.longitude} : 'empty'"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="submit">Submit</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
             </div>
         </fieldset>
     </form>

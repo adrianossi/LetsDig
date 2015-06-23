@@ -1,6 +1,8 @@
 package org.letsdig.app.controllers;
 
 import org.letsdig.app.models.LatLong;
+import org.letsdig.app.models.Project;
+import org.letsdig.app.models.ProjectAccessException;
 import org.letsdig.app.models.User;
 import org.letsdig.app.models.util.LatLongUtils;
 import org.letsdig.app.models.util.PasswordHash;
@@ -21,36 +23,24 @@ public class ProfileController extends AbstractLetsDigController {
     @RequestMapping(value = "/profile")
     public String profile(HttpServletRequest request, Model model) {
 
-        // get user's data from db
         User user = getUserFromSession(request);
 
-/*        // add new info to model
-        model.addAttribute("username", user.getUsername());
-
-        model.addAttribute("displayName", user.gimmeDisplayName());
-
-        if (user.getFirstName() != null) {
-            model.addAttribute("firstName", user.getFirstName());
-        } else {
-            model.addAttribute("firstName", "empty");
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
         }
 
-        if (user.getLastName() != null) {
-            model.addAttribute("lastName", user.getLastName());
-        } else {
-            model.addAttribute("lastName", "empty");
-        }
-
-        if (user.getLocation() != null) {
-            model.addAttribute("latitude", user.getLocation().getLatitude());
-            model.addAttribute("longitude", user.getLocation().getLongitude());
-        } else {
-            model.addAttribute("latitude", "empty");
-            model.addAttribute("longitude", "empty");
-        }
-*/
-        // add user to model
         model.addAttribute("user", user);
+
+        Project project;
+
+        try {
+            project = getActiveProject(request);
+            model.addAttribute("project", project);
+
+        } catch (ProjectAccessException e) {
+            e.printStackTrace();
+        }
 
         if (user.getLocation() != null) {
             model.addAttribute("location", user.getLocation());
@@ -63,26 +53,28 @@ public class ProfileController extends AbstractLetsDigController {
     @RequestMapping(value = "/profileedit", method = RequestMethod.GET)
     public String profileEdit(HttpServletRequest request, Model model) {
 
-        // get user's data from db
         User user = getUserFromSession(request);
 
-        // put the data into the model
-        model.addAttribute("displayName", user.gimmeDisplayName());
-        model.addAttribute("username", user.getUsername());
-        model.addAttribute("firstName", user.getFirstName());
-        model.addAttribute("lastName", user.getLastName());
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
 
-        // TODO add location to profile edit display
+        model.addAttribute("user", user);
 
-        /*
-        if (user.getLocationId() != 0) {
-            LatLong location = latLongDao.findByUid(user.getLocationId());
-            model.addAttribute("latitude", location.getLatitude());
-            model.addAttribute("longitude", location.getLongitude());
-        } else {
-            model.addAttribute("latitude", "empty");
-            model.addAttribute("longitude", "empty");
-        }*/
+        Project project;
+
+        try {
+            project = getActiveProject(request);
+            model.addAttribute("project", project);
+
+        } catch (ProjectAccessException e) {
+            e.printStackTrace();
+        }
+
+        if (user.getLocation() != null) {
+            model.addAttribute("location", user.getLocation());
+        }
 
         // display the profileedit template
         return "profileedit";
@@ -98,9 +90,25 @@ public class ProfileController extends AbstractLetsDigController {
             HttpServletRequest request,
             Model model) {
 
-        // get user's data from db
         User user = getUserFromSession(request);
-        
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
+        Project project;
+
+        try {
+            project = getActiveProject(request);
+            model.addAttribute("project", project);
+
+        } catch (ProjectAccessException e) {
+            e.printStackTrace();
+        }
+
         // check each field for user input; if empty-->skip, else-->set
         // USERNAME
         if (!username.equals("") && !username.equals(user.getUsername())) {
@@ -147,11 +155,27 @@ public class ProfileController extends AbstractLetsDigController {
     @RequestMapping(value = "/changepwd", method = RequestMethod.GET)
     public String changPwd (HttpServletRequest request, Model model) {
 
-        // get user's data from db
         User user = getUserFromSession(request);
 
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
+        Project project;
+
+        try {
+            project = getActiveProject(request);
+            model.addAttribute("project", project);
+
+        } catch (ProjectAccessException e) {
+            e.printStackTrace();
+        }
+
         // add name to model
-        model.addAttribute("displayName", user.gimmeDisplayName());
+        model.addAttribute("displayName", user.toString());
 
         return "changepwd";
     }
@@ -159,8 +183,24 @@ public class ProfileController extends AbstractLetsDigController {
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
     public String changePwd(String oldPassword, String newPassword, String confirmNewPassword, HttpServletRequest request, Model model) {
 
-        // get user's data from db
         User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
+        Project project;
+
+        try {
+            project = getActiveProject(request);
+            model.addAttribute("project", project);
+
+        } catch (ProjectAccessException e) {
+            e.printStackTrace();
+        }
 
         // check for validity of old password
         if (!PasswordHash.isValidPassword(oldPassword, user.getHash())) {

@@ -52,7 +52,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         request.getSession().setAttribute(userSessionKey, newUser.getId());
 
         // Store user's name
-        model.addAttribute("displayName", newUser.gimmeDisplayName());
+        model.addAttribute("displayName", newUser.toString());
 
         // display login landing page
         return "redirect:projects";
@@ -89,7 +89,7 @@ public class AuthenticationController extends AbstractLetsDigController {
         request.getSession().setAttribute(userSessionKey, existingUser.getId());
 
         // add user's name to model
-        model.addAttribute("displayName", existingUser.gimmeDisplayName());
+        model.addAttribute("displayName", existingUser.toString());
 
         // display login landing page
         return "redirect:projects";

@@ -12,36 +12,36 @@
     <h4><a href="/project-settings">Settings</a></h4>
     <p>Grid: <span th:text="${gridMessage}"></span></p>
     <p>Squares under excavation: <span th:text="${numSquares}"></span></p>
-    <p>Total units: <span th:text="${#sets.size(closedUnits) + #sets.size(openUnits)}"></span></p>
-    <p>Units closed: <span th:text="${#sets.size(closedUnits)}"></span></p>
-    <p>Units currently open: <span th:text="${#sets.size(openUnits)}"></span></p>
+    <p>Total units: <span th:text="${totalUnits}"></span> (<a href="/unit-list?q=a">List</a>)</p>
+    <p>Units closed: <span th:text="${closedUnitCount}"></span> (<a href="/unit-list?q=c">List</a>)</p>
+    <p>Units currently open: <span th:text="${openUnitCount}"></span> (<a href="/unit-list?q=o">List</a>)</p>
 
 
     <form class="landing" method="post" action="/unit-opennew">
-        Open new unit in square X, Y
+        <em>Open new unit in square X, Y</em>
         <fieldset>
-            <input autofocus="true" class="form-control" name="squareCoords" placeholder="Square (e.g. 34, 9)" type="text"/>
+            <input class="form-control" name="squareCoords" placeholder="Square (e.g. 34, 9)" type="text"/>
             <button type="submit">Let's dig!</button>
         </fieldset>
     </form>
     <form class="landing" method="post" action="/unit-continue">
-        Continue existing unit
+        <em>Continue existing unit</em>
         <fieldset>
             <select name="unitId">
                 <option disabled="disabled" selected="selected">Select Unit</option>
-                <option th:if="${#sets.isEmpty(openUnits)}"
+                <option th:if="${openUnits == null or #sets.isEmpty(openUnits)}"
                         th:text="'No units found'"
                         th:disabled="disabled"></option>
-                <option th:if="${not #sets.isEmpty(openUnits)}"
+                <option th:if="${openUnits != null and not #sets.isEmpty(openUnits)}"
                         th:each="openUnit : ${openUnits}"
-                        th:value="${openUnit.getId()}"
-                        th:text="${openUnit.gimmeName()}">(No units available)</option>
+                        th:value="*{openUnit.getId()}?:'empty'"
+                        th:text="*{openUnit.gimmeName()}?:'(No units available)'"></option>
             </select>
             <button type="submit">Continue digging</button>
         </fieldset>
     </form>
     <form class="landing" method="post" action="/unit-sheet-show">
-        Review closed unit
+        <em>Review closed unit</em>
         <fieldset>
             <select name="unitId">
                 <option disabled="disabled" selected="selected">Select Unit</option>
@@ -50,8 +50,8 @@
                         th:disabled="disabled"></option>
                 <option th:if="${not #sets.isEmpty(closedUnits)}"
                         th:each="closedUnit : ${closedUnits}"
-                        th:value="${closedUnit.getId()}"
-                        th:text="${closedUnit.gimmeName()}">(No units available)</option>
+                        th:value="*{closedUnit.getId()}?:'empty'"
+                        th:text="${closedUnit.gimmeName()}?: '(No units available)'"></option>
             </select>
             <button type="submit">Review unit</button>
         </fieldset>

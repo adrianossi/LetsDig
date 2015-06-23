@@ -93,11 +93,13 @@ public class User extends AbstractLetsDigEntity {
 
     @Override
     public String toString() {
-        return this.firstName + " " + this.lastName;
-    }
-
-    public String gimmeDisplayName() {
-        return (this.getFirstName() == null) ? this.getUsername() : this.getFirstName();
+        if (firstName != null) {
+            if (lastName != null) {
+                return firstName + " " + lastName;
+            }
+            return firstName;
+        }
+        return username;
     }
 
 }

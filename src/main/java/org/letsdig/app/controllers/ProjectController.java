@@ -31,8 +31,8 @@ public class ProjectController extends AbstractLetsDigController {
         // get user's data from db
         User user = getUserFromSession(request);
 
-        // add user's name to model
-        model.addAttribute("displayName", user.gimmeDisplayName());
+        // add user object to model
+        model.addAttribute("user", user);
 
         // check for projects owned by user
         List<Project> projects = user.getProjects();
@@ -84,6 +84,15 @@ public class ProjectController extends AbstractLetsDigController {
             HttpServletRequest request,
             Model model) {
 
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
         Project project;
 
         try {
@@ -96,34 +105,14 @@ public class ProjectController extends AbstractLetsDigController {
 
         model.addAttribute("project", project);
 
-/*        // prep model
-        model.addAttribute("projectName", project.getName());
-
-        if (project.getFullName() != null) {
-            model.addAttribute("projectFullName", project.getFullName());
-        }
-*/
         if (project.getLocation() != null) {
             model.addAttribute("location", project.getLocation());
         }
 
-/*        if (project.getLocation() != null) {
-            model.addAttribute("latitude", project.getLocation().getLatitude());
-            model.addAttribute("longitude", project.getLocation().getLongitude());
-        } else {
-            model.addAttribute("latitude", "empty");
-            model.addAttribute("longitude", "empty");
-        }
-*/
         if (project.getGrid() != null) {
             model.addAttribute("grid", project.getGrid());
         }
 
-/*
-        if (project.getGrid() != null) {
-            model.addAttribute("gridStatus", "Grid is set (origin: " + project.getGrid().originToString() + ")");
-        }
-*/
         return "project-settings";
     }
 
@@ -135,6 +124,15 @@ public class ProjectController extends AbstractLetsDigController {
             Model model,
             HttpServletRequest request) {
 
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
         Project project;
 
         try {
@@ -144,6 +142,8 @@ public class ProjectController extends AbstractLetsDigController {
             model.addAttribute("message", e.getMessage());
             return "error";
         }
+
+        model.addAttribute("project", project);
 
         // check if fullName input is present
         if (!fullName.equals("")) {
@@ -181,6 +181,15 @@ public class ProjectController extends AbstractLetsDigController {
             HttpServletRequest request,
             Model model) {
 
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
         Project project;
 
         try {
@@ -191,7 +200,7 @@ public class ProjectController extends AbstractLetsDigController {
             return "error";
         }
 
-        model.addAttribute("fullName", project.gimmeDisplayName());
+        model.addAttribute("project", project);
 
         return "project-settings-edit";
     }
@@ -201,6 +210,15 @@ public class ProjectController extends AbstractLetsDigController {
             String projectName,
             HttpServletRequest request,
             Model model) {
+
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
 
         // query db for project
         Project currentProject = projectDao.findByDirectorIdAndName(getUserIdFromSession(request), projectName);
@@ -225,6 +243,15 @@ public class ProjectController extends AbstractLetsDigController {
             request.getSession().removeAttribute(unitSessionKey);
         }
 
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
         Project project;
 
         try {
@@ -235,6 +262,8 @@ public class ProjectController extends AbstractLetsDigController {
             return "error";
         }
 
+        model.addAttribute("project", project);
+
         // get grid from project
         Grid grid = project.getGrid();
 
@@ -243,8 +272,10 @@ public class ProjectController extends AbstractLetsDigController {
             model.addAttribute("gridMessage", "Not set");
             model.addAttribute("numSquares", "0");
             model.addAttribute("totalUnits", "0");
-            model.addAttribute("openUnits", "0");
-            model.addAttribute("closedUnits", "0");
+            model.addAttribute("openUnitCount", "0");
+            model.addAttribute("closedUnitCount", "0");
+            model.addAttribute("openUnits", new TreeSet<>());
+            model.addAttribute("closedUnits", new TreeSet<>());
 
         } else {
 
@@ -264,13 +295,10 @@ public class ProjectController extends AbstractLetsDigController {
             int closedUnitCount = 0;
             int openUnitCount = 0;
 
-            // sorter to properly sort units when presented
-            // in the format "(colNum, rowNum)unitNum"
- //treemap           UnitNameSorter unitNameSorter = new UnitNameSorter();
+            // sorter to properly sort units by col, then row, then unit num
             UnitSorter unitSorter = new UnitSorter();
 
-            // TreeMap to store ordered unit names => unitId
- //treemap           Map<String, Integer> unitNamesAndIds = new TreeMap<>(unitNameSorter);
+            // TreeMaps to store sorted units
             Set<Unit> openUnits = new TreeSet<>(unitSorter);
             Set<Unit> closedUnits = new TreeSet<>(unitSorter);
 

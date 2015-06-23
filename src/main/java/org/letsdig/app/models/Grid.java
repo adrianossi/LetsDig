@@ -102,8 +102,6 @@ public class Grid extends AbstractLetsDigEntity {
         return this.getOrigin().getLatitude() + ", " + this.getOrigin().getLongitude();
     }
 
-
-
     public Square getOrCreateSquare(int colNum, int rowNum) {
         if (    colNum < 0 ||
                 colNum > this.bigGridNumCols ||
@@ -122,6 +120,38 @@ public class Grid extends AbstractLetsDigEntity {
         }
 
         return new Square(this, colNum, rowNum);
+    }
+
+    public List<Unit> gimmeAllUnits() {
+
+        List<Unit> allUnits = new ArrayList<>();
+
+        for (Square square : this.getSquares()) {
+            allUnits.addAll(square.getUnits());
+        }
+        return allUnits;
+    }
+
+    public List<Unit> gimmeFilteredUnits(String query) {
+
+        List<Unit> filteredUnits = new ArrayList<>();
+
+        switch (query) {
+            case "open":
+
+                for (Square square : this.getSquares()) {
+                    filteredUnits.addAll(square.gimmeOpenUnits());
+                }
+                break;
+
+            case "closed":
+                for (Square square : this.getSquares()) {
+                    filteredUnits.addAll(square.gimmeClosedUnits());
+                }
+                break;
+        }
+
+        return filteredUnits;
     }
 
 }

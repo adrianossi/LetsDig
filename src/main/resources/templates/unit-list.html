@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+<header th:replace="template :: header-foyer"></header>
+
+<main>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Open Date</th>
+            <th>Close Date</th>
+        </tr>
+        <tr th:each="unit : ${requestedUnits}">
+            <td>
+                <a th:href="'/unit-sheet-show?unitId=' + ${unit.getId()}" th:text="${unit.gimmeName()}"></a>
+            </td>
+            <td>
+                <span th:text="${unit.getOpenDate()}"></span>
+            </td>
+            <td>
+                <span th:text="*{unit.getCloseDate()}?: 'Still open'"></span>
+            </td>
+        </tr>
+    </table>
+</main>
+
+<footer th:replace="template :: footer-auth"></footer>
+</body>
+</html>

@@ -1,9 +1,6 @@
 package org.letsdig.app.controllers;
 
-import org.letsdig.app.models.Grid;
-import org.letsdig.app.models.LatLong;
-import org.letsdig.app.models.Project;
-import org.letsdig.app.models.ProjectAccessException;
+import org.letsdig.app.models.*;
 import org.letsdig.app.models.util.LatLongUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +21,26 @@ public class GridController extends AbstractLetsDigController {
     public String setGrid(Model model,
                           HttpServletRequest request) {
 
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
+
         Project project;
 
         try {
             project = getActiveProject(request);
+
         } catch (ProjectAccessException e) {
             model.addAttribute("message", e.getMessage());
             return "error";
         }
+
+        model.addAttribute("project", project);
 
         model.addAttribute("fullName", project.getFullName());
 
@@ -47,6 +56,15 @@ public class GridController extends AbstractLetsDigController {
             String bgSqSize,
             String bgNumRows,
             String bgNumCols) {
+
+        User user = getUserFromSession(request);
+
+        if (user == null) {
+            model.addAttribute("message", "Error loading user data.");
+            return "error";
+        }
+
+        model.addAttribute("user", user);
 
         Project project;
 

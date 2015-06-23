@@ -77,12 +77,11 @@ public class Project extends AbstractLetsDigEntity {
         this.grid = grid;
     }
 
-    public String gimmeDisplayName() {
-
+    @Override
+    public String toString() {
         if (fullName != null) {
             return fullName;
         }
-
         return name;
     }
 

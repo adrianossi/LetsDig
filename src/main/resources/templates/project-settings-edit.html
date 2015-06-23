@@ -9,7 +9,7 @@
     </header>
 
     <main>
-        <h2 th:text="${projectName}">Project Name</h2>
+        <h2 th:text="${project.toString()}">Project Name</h2>
         (<a href="/unloadproject">Close project</a>)
         <form class="indoors" method="post" action="/project-settings">
             <fieldset>

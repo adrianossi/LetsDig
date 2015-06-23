@@ -24,15 +24,6 @@ a:hover {
     padding: 5px;
 }
 
-.frontdoor button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding: 5px;
-}
-
 .landing {
     display: inline-block;
     text-align: center;
@@ -47,13 +38,31 @@ a:hover {
     padding: 5px;
 }
 
-.landing button {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding: 5px;
+button {
+    background: #55afeb;
+    background-image: -webkit-linear-gradient(top, #55afeb, #2c8bc7);
+    background-image: -moz-linear-gradient(top, #55afeb, #2c8bc7);
+    background-image: -ms-linear-gradient(top, #55afeb, #2c8bc7);
+    background-image: -o-linear-gradient(top, #55afeb, #2c8bc7);
+    background-image: linear-gradient(to bottom, #55afeb, #2c8bc7);
+    border-radius: .5em;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 1em;
+    padding: .5em 1em .5em 1em;
+    text-decoration: none;
+    box-shadow: none;
+    display:inline-block;
+}
+
+button:hover {
+    background: #5abdfa;
+    background-image: -webkit-linear-gradient(top, #5abdfa, #4d9fd6);
+    background-image: -moz-linear-gradient(top, #5abdfa, #4d9fd6);
+    background-image: -ms-linear-gradient(top, #5abdfa, #4d9fd6);
+    background-image: -o-linear-gradient(top, #5abdfa, #4d9fd6);
+    background-image: linear-gradient(to bottom, #5abdfa, #4d9fd6);
+    text-decoration: none;
 }
 
 .wizard {
@@ -68,8 +77,16 @@ fieldset {
     border: none;
 }
 
+body {
+    text-align: center;
+}
+
 body header {
     text-align: center;
+}
+
+body main {
+    width: auto;
 }
 
 .header-foyer ul li {
@@ -120,10 +137,57 @@ footer {
 form.frontdoor {
     display: inline-block;
     width: 30%;
+    text-align: center;
+
+}
+
+form.landing {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+    padding-bottom: auto;
+}
+
+form.landing fieldset select button input {
+    display: block;
+}
+
+form.landing fieldset select {
+    display: block;
+    text-align: center;
+    margin: auto;
+    height: 36px;
+    min-width: 193px;
+}
+
+form.landing fieldset input {
+    display: block;
+    text-align: left;
+    margin: auto;
+}
+
+form.landing fieldset button {
+    display: block;
+    text-align: center;
+    margin: auto;
+}
+
+.form-label {
+    font-size: 24px;
+    padding-bottom: 16px;
+}
+
+#profile-edit-form td {
+    margin: 0;
 }
 
 main.frontdoor {
-    width: 70%;
+    width: 100%;
+    text-align: center;
+}
+
+.header-foyer {
+    height: 100px;
 }
 
 .header-foyer div {
@@ -135,11 +199,57 @@ main.frontdoor {
     float: left;
 }
 
-#header-center {
-    text-align: center;
+#header-left a {
+    color: #000000;
+    text-decoration: none;
+}
+
+#header-left a:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+#header-left a:visited {
+    color: #000000;
+    text-decoration: none;
+}
+
+#header-wordmark-img {
+    height: 32px;
+}
+
+#header-wordmark-text {
+    font-size: 32px;
+    font-weight: bold;
 }
 
 #header-right {
     text-align: right;
     float: right;
+}
+
+#header-user-img {
+    height: 32px;
+}
+
+#header-username {
+    font-size: 24px;
+}
+
+#header-right-text {
+    display: inline-block;
+}
+
+#header-right-text ul {
+    margin: 0;
+}
+
+#header-right-img {
+    display: inline-block;
+    vertical-align: top;
+}
+
+th, td {
+    padding: .25em;
+    padding-right: 1em;
 }
