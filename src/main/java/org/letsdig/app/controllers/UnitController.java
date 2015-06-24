@@ -372,6 +372,8 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
+        model.addAttribute("project", project);
+
         // get grid from project
         Grid grid = project.getGrid();
 
