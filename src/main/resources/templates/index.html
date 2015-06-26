@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+    <header>
+        <h1><img id="mainlogo" src="/img/letsdig_logo.jpg" alt="(Logo)"/>LetsDig</h1>
+        <h2>Welcome, <span th:text="${username}">user</span>!</h2>
+    </header>
+
+    <main>
+        <form class="frontdoor" method="post" action="/login">
+            <fieldset>
+                <div class="form-group">
+                    <input autofocus="true" class="form-control" name="username" placeholder="Username" type="text"/>
+                    <input class="form-control" name="password" placeholder="Password" type="password"/>
+                    <button type="submit">Login</button>
+                </div>
+            </fieldset>
+        </form>
+        <p id="register">Not registered? <a href="/register">Create</a> an account.</p>
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>

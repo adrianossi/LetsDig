@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head lang="en" th:fragment="head-frontdoor">
+    <meta charset="UTF-8"/>
+    <link th:href="@{/css/normalize.css}" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <title>LetsDig: The Archaeology App</title>
+</head>
+
+<body>
+
+<!-- Header for non-authenticated visitors -->
+    <header th:fragment="header-frontdoor">
+        <h1><img id="mainlogo" src="/img/letsdig_logo_300px.jpg"/>LetsDig</h1>
+    </header>
+
+<!-- Header for authenticated visitors in entry pages -->
+    <header class="header-foyer" th:fragment="header-foyer">
+        <div id="header-left">
+            <a href="/projects">
+                <img id="header-wordmark-img"
+                     th:src="@{/img/letsdig_logo_300px.jpg}"/>
+                <span id="header-wordmark-text"
+                      th:text="${project}? 'LetsDig: ' + ${project.toString()} : 'LetsDig'">LetsDig</span></a>
+            <ul class="project-menu" th:remove="${project}? none : all">
+                <li>Project menu:</li>
+                <li><a href="/project-summary">Overview</a> |</li>
+                <li><a href="/project-settings">Settings</a> |</li>
+                <li><a href="/unloadproject">Unload</a></li>
+            </ul>
+        </div>
+        <div id="header-right">
+            <div id="header-right-text">
+                <span id="header-username" th:text="${user}? ${user.toString()} : 'Username not found'">LetsDig user</span>
+                <ul class="usermenu">
+                    <li><a href="/projects">Projects</a> |</li>
+                    <li><a href="/profile">Profile</a> |</li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+            <div id="header-right-img">
+                <img id="header-user-img" th:src="@{/img/default_user_img.jpg}"/>
+            </div>
+        </div>
+        <p th:remove="${message}? none : all" th:text="${message}? ${message}"></p>
+    </header>
+
+<!-- Header for authenticated visitors in working pages-->
+    <header class="header-workroom" th:fragment="header-workroom">
+        <!--
+        <p class="workroom-wordmark"><a href="projects.html"><img src="/img/letsdig_logo_300px.jpg"/><h1>LetsDig</h1></a></p>
+        -->
+        <ul class="usermenu">
+            <li th:replace="${displayName}">LetsDig User</li>
+            <li><a href="profile.html">Profile</a></li>
+            <li><a href="logout.html">Logout</a></li>
+        </ul>
+    </header>
+
+<!-- Footer for non-authenticated users -->
+    <footer th:fragment="footer-nonauth">
+        <p>Copyright 2015 A. Ossi</p>
+    </footer>
+
+<!-- Footer for authenticated users -->
+    <footer th:fragment="footer-auth">
+        <p><a href="/logout">Logout</a></p>
+        <p>Copyright 2015 A. Ossi</p>
+    </footer>
+
+</body>
+</html>

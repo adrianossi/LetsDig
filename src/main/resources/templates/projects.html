@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+
+<header th:replace="template :: header-foyer">
+</header>
+
+
+<main class="centered">
+    <form class="landing" method="post" action="/createproject">
+        <fieldset>
+            <span class="form-label"><p>Start a new project</p></span>
+            <input autofocus="true" class="form-control" name="projectName" placeholder="Project nickname" type="text"/>
+            <button type="submit">Create Project</button>
+        </fieldset>
+    </form>
+    <form class="landing" method="post" action="/loadproject">
+        <fieldset>
+            <span class="form-label"><p>Continue existing project</p></span>
+            <select name="projectName">
+                <option disabled="disabled" selected="selected">Select Project</option>
+                <option th:if="${#lists.isEmpty(projectNames)}"
+                        th:text="'No projects found'"
+                        th:disabled="disabled"></option>
+                <option th:if="${not #lists.isEmpty(projectNames)}"
+                        th:each="name : ${projectNames}"
+                        th:value="${name}"
+                        th:text="${name}">(No projects available)</option>
+            </select>
+            <button type="submit">Load Project</button>
+        </fieldset>
+    </form>
+</main>
+
+<footer th:replace="template :: footer-auth">
+</footer>
+
+</body>
+</html>
