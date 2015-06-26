@@ -279,7 +279,7 @@ public class ProjectController extends AbstractLetsDigController {
 
         } else {
 
-            model.addAttribute("gridMessage", "Origin " + grid.originToString());
+            model.addAttribute("gridMessage", grid.getBigGridNumCols() + " by " + grid.getBigGridNumRows() + " squares; origin " + grid.originToString());
 
             // get squares from the grid
             List<Square> squares = grid.getSquares();

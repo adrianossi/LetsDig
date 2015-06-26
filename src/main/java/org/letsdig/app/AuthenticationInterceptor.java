@@ -13,7 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by adrian on 6/1/15.
+ * Created by Adrian Ossi on 6/1/15.
+ *
+ * Based on a template by Chris Bay, except where indicated.
  */
 public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
@@ -56,6 +58,8 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
          * Decide what to do with request based on
          * isPublicRequestedUri and isPresentValidUser
          * (4 possibilities: T/T, T/F, F/T, F/F)
+         *
+         * by Adrian Ossi
          */
 
         if (isPublicRequestedUri) {
@@ -89,42 +93,5 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
             }
 
         }
-
-    /*
-        TODO: delete this old preHandle code?
-
-        // check if requested page requires authentication...
-        if (!authPages.contains(request.getRequestURI())) {
-
-            // get the user id from the session
-            Integer userId = (Integer)request.getSession().getAttribute(AbstractLetsDigController.userSessionKey);
-
-            // verify that the session had a user id in it...
-            if (userId == null) {
-
-                // ...if not, redirect to login page
-                response.sendRedirect("/login");
-                return false;
-            }
-
-            // a user was present in the session, so find it in the db
-            User user = userDao.findByUid(userId);
-
-            // verify the db's response
-            if (user == null) {
-
-                // db responded that user doesn't exist, so redirect to login
-                response.sendRedirect("/login");
-                return false;
-            }
-
-        }
-
-        // both checks pass, so a valid user is present,
-        // so continue to process the request
-        return true;
-
-    */
-
     }
 }

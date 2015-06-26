@@ -10,13 +10,12 @@
         <h3>Project settings</h3> (<a href="/project-settings-edit">edit</a>)
         <p>Project nickname: <span th:text="${project.name}">empty</span></p>
         <p>Full name: <span th:text="${project.fullName}?: 'empty'">empty</span></p>
-        <p>Latitude: <span th:text="${location}? ${location.latitude} : 'empty'">empty</span></p>
-        <p>Longitude: <span th:text="${location}? ${location.longitude} : 'empty'">empty</span></p>
+        <p>General location: <span th:text="${location}? ${location.toString()} : 'empty'">empty</span></p>
         <iframe th:remove="${location}? none : all" width="600" height="450" frameborder="0" style="border:0"
                 th:src="${location}? ${location.gimmeEmbedUrl()} : 'empty'"></iframe>
         <p>Grid: <span
-                th:text="${grid}? 'Set with origin at ' + ${grid.origin.gimmeLocationString()} : 'Not set.'">Not set.></span></p>
-        <p><a href="/setgrid-viewform">Set grid</a></p>
+                th:text="${grid}? ${grid.getBigGridNumCols()} + ' by ' + ${grid.getBigGridNumRows()} + ' squares, each ' + ${grid.getBigGridSquareSize()} + ' by ' + ${grid.getBigGridSquareSize()} + ' m, origin at ' + ${grid.origin.toString()} : 'Not set.'">Not set.></span></p>
+        <p><a href="/setgrid-viewform" th:text="${grid}? 'Reset grid' : 'Set grid'">Set grid</a></p>
     </main>
 
     <footer th:replace="template :: footer-auth"></footer>

@@ -77,7 +77,8 @@ public class LatLong extends AbstractLetsDigEntity {
         this.grids = grids;
     }
 
-    public String gimmeLocationString() {
+    @Override
+    public String toString() {
         return this.getLatitude() + ", " + this.getLongitude();
     }
 
