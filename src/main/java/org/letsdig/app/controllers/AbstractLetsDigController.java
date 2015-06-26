@@ -32,6 +32,9 @@ public abstract class AbstractLetsDigController {
     @Autowired
     protected UnitDao unitDao;
 
+    @Autowired
+    protected LevelDao levelDao;
+
 //    @Autowired
   //  protected UnitDao unitDao;
 
