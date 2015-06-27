@@ -1,4 +1,5 @@
 org/letsdig/app/models/util/UnitNameSorter.class
+org/letsdig/app/models/Datum.class
 org/letsdig/app/controllers/ProjectController.class
 org/letsdig/app/models/dao/UnitDao.class
 org/letsdig/app/LetsDigApplication.class
@@ -6,14 +7,19 @@ org/letsdig/app/models/dao/GridDao.class
 org/letsdig/app/models/util/UnitSorter.class
 org/letsdig/app/controllers/LatLongController.class
 org/letsdig/app/models/User.class
+org/letsdig/app/models/Level.class
 org/letsdig/app/controllers/AuthenticationController.class
+org/letsdig/app/models/dao/UnitLevelDao.class
 org/letsdig/app/models/dao/LatLongDao.class
 org/letsdig/app/models/LatLong.class
+org/letsdig/app/models/UnitLevel.class
+org/letsdig/app/models/dao/DatumDao.class
 org/letsdig/app/models/util/PasswordHash.class
 org/letsdig/app/AuthenticationInterceptor.class
 org/letsdig/app/models/util/LatLongUtils.class
 org/letsdig/app/controllers/AbstractLetsDigController.class
 org/letsdig/app/models/Square.class
+org/letsdig/app/models/UnitLevel$LevelType.class
 org/letsdig/app/models/dao/SquareDao.class
 org/letsdig/app/models/util/GridUtils.class
 org/letsdig/app/models/UnitParameterException.class

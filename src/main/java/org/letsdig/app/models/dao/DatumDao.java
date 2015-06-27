@@ -1,18 +1,18 @@
 package org.letsdig.app.models.dao;
 
-import org.letsdig.app.models.Level;
+import org.letsdig.app.models.Datum;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
 /**
- * Created by adrian on 6/26/15.
+ * Created by adrian on 6/27/15.
  */
 
 @Transactional
 @Repository
-public interface LevelDao extends CrudRepository<Level, Integer> {
+public interface DatumDao extends CrudRepository<Datum, Integer> {
 
-    Level findById(int id);
+    Datum findById(int id);
 }

@@ -3,7 +3,9 @@ package org.letsdig.app.models;
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by adrian on 6/11/15.
@@ -18,6 +20,7 @@ public class Unit extends AbstractLetsDigEntity {
     private Date openDate;
     private Date closeDate;
     private String description;
+    private List<UnitLevel> levels;
 
     public Unit(Square square, int number) {
         this.square = square;
@@ -25,6 +28,7 @@ public class Unit extends AbstractLetsDigEntity {
         this.openDate = new Date();
         this.closeDate = null;
         this.description = null;
+        this.levels = new ArrayList<>();
     }
 
     public Unit() {}
@@ -79,6 +83,15 @@ public class Unit extends AbstractLetsDigEntity {
 
     public void setCloseDate(Date closeDate) {
         this.closeDate = closeDate;
+    }
+
+    @OneToMany(mappedBy = "unit", cascade = CascadeType.PERSIST)
+    public List<UnitLevel> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<UnitLevel> levels) {
+        this.levels = levels;
     }
 
     /**
