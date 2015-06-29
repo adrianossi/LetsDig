@@ -16,13 +16,13 @@
         </tr>
         <tr th:each="unit : ${requestedUnits}">
             <td>
-                <a th:href="'/unit-sheet-show?unitId=' + ${unit.getId()}" th:text="${unit.gimmeName()}"></a>
+                <a th:href="'/unit-sheet-show?unitId=' + ${unit.getId()}" th:text="${unit.toString()}"></a>
             </td>
             <td>
-                <span th:text="${unit.getOpenDate()}"></span>
+                <span th:text="${unit.gimmeFormattedOpenDate()}"></span>
             </td>
             <td>
-                <span th:text="*{unit.getCloseDate()}?: 'Still open'"></span>
+                <span th:text="*{unit.gimmeFormattedCloseDate()}?: 'Still open'"></span>
             </td>
         </tr>
     </table>

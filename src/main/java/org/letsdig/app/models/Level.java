@@ -1,5 +1,7 @@
 package org.letsdig.app.models;
 
+import org.letsdig.app.models.util.DateUtils;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -49,5 +51,9 @@ public abstract class Level extends AbstractLetsDigEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String gimmeFormattedDateStamp() {
+        return DateUtils.formatDate(dateStamp);
     }
 }

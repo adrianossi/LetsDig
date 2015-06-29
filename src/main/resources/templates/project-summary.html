@@ -18,9 +18,9 @@
 
 
     <form class="landing" method="post" action="/unit-opennew">
-        <em>Open new unit in square X, Y</em>
+        <em>Open new unit in square X.Y</em>
         <fieldset>
-            <input class="form-control" name="squareCoords" placeholder="Square (e.g. 34, 9)" type="text"/>
+            <input class="form-control" name="squareCoords" placeholder="Square (e.g. 34.9)" type="text"/>
             <button type="submit">Let's dig!</button>
         </fieldset>
     </form>
@@ -35,7 +35,7 @@
                 <option th:if="${openUnits != null and not #sets.isEmpty(openUnits)}"
                         th:each="openUnit : ${openUnits}"
                         th:value="*{openUnit.getId()}?:'empty'"
-                        th:text="*{openUnit.gimmeName()}?:'(No units available)'"></option>
+                        th:text="*{openUnit.toString()}?:'(No units available)'"></option>
             </select>
             <button type="submit">Continue digging</button>
         </fieldset>
@@ -51,7 +51,7 @@
                 <option th:if="${not #sets.isEmpty(closedUnits)}"
                         th:each="closedUnit : ${closedUnits}"
                         th:value="*{closedUnit.getId()}?:'empty'"
-                        th:text="${closedUnit.gimmeName()}?: '(No units available)'"></option>
+                        th:text="${closedUnit.toString()}?: '(No units available)'"></option>
             </select>
             <button type="submit">Review unit</button>
         </fieldset>

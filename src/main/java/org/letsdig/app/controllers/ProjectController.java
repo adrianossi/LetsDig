@@ -264,6 +264,17 @@ public class ProjectController extends AbstractLetsDigController {
 
         model.addAttribute("project", project);
 
+        Datum datum;
+
+        if (aDatumIsActive(request)) {
+            try {
+                datum = getActiveDatum(request);
+                model.addAttribute("datum", datum);
+            } catch (DatumAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
         // get grid from project
         Grid grid = project.getGrid();
 

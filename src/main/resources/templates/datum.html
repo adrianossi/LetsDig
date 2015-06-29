@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head th:replace="template :: head-frontdoor">
+</head>
+
+<body>
+<header th:replace="template :: header-foyer"></header>
+
+<main>
+    <form action="/datum" method="post">
+        <fieldset>
+            <input name="datum_value" type="number" placeholder="Value in masl" step="0.01"/>
+            <input name="datum_description" type="text" placeholder="Description"/>
+            <button type="submit">Set datum</button>
+        </fieldset>
+    </form>
+</main>
+
+<footer th:replace="template :: footer-auth"></footer>
+</body>
+</html>

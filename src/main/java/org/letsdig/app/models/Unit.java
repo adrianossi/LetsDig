@@ -1,5 +1,7 @@
 package org.letsdig.app.models;
 
+import org.letsdig.app.models.util.DateUtils;
+
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
@@ -102,8 +104,21 @@ public class Unit extends AbstractLetsDigEntity {
         this.closeDate = new Date();
     }
 
-    public String gimmeName() {
-        return "(" + this.getSquare().toString() + ")" + this.getNumber();
+    @Override
+    public String toString() {
+        return this.getSquare().toString() + "." + this.getNumber();
+    }
+
+    public UnitLevel createLevel(double value, String description, UnitLevel.LevelType type, Datum datum) {
+        return new UnitLevel(value, description, type, datum, this);
+    }
+
+    public String gimmeFormattedOpenDate() {
+        return DateUtils.formatDate(this.getOpenDate());
+    }
+
+    public String gimmeFormattedCloseDate() {
+        return DateUtils.formatDate(this.getCloseDate());
     }
 }
 

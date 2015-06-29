@@ -5,7 +5,7 @@ package org.letsdig.app.models.util;
  */
 abstract public class GridUtils {
 
-    public static String coordDelims = "[ ,()]+";
+    public static String coordDelims = "[ .,()]+";
 
     public static int getColFromCoords(String userInput) {
         String[] squareCoords = userInput.split(coordDelims);

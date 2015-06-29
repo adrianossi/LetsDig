@@ -15,8 +15,10 @@ org/letsdig/app/models/LatLong.class
 org/letsdig/app/models/UnitLevel.class
 org/letsdig/app/models/dao/DatumDao.class
 org/letsdig/app/models/util/PasswordHash.class
+org/letsdig/app/models/DatumAccessException.class
 org/letsdig/app/AuthenticationInterceptor.class
 org/letsdig/app/models/util/LatLongUtils.class
+org/letsdig/app/models/util/DateUtils.class
 org/letsdig/app/controllers/AbstractLetsDigController.class
 org/letsdig/app/models/Square.class
 org/letsdig/app/models/UnitLevel$LevelType.class
@@ -29,6 +31,7 @@ org/letsdig/app/WebApplicationConfig.class
 org/letsdig/app/models/UnitAccessException.class
 org/letsdig/app/models/dao/ProjectDao.class
 org/letsdig/app/controllers/UnitController.class
+org/letsdig/app/controllers/DatumController.class
 org/letsdig/app/models/Unit.class
 org/letsdig/app/models/Grid.class
 org/letsdig/app/models/ProjectAccessException.class

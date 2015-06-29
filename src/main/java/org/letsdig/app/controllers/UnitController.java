@@ -29,6 +29,7 @@ public class UnitController extends AbstractLetsDigController {
             Model model,
             HttpServletRequest request){
 
+        // TODO have to load datum from session in EVERY project, unit, grid, etc controller method
         User user = getUserFromSession(request);
 
         if (user == null) {
@@ -165,20 +166,7 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
-        model.addAttribute("unitName", unit.gimmeName());
-        model.addAttribute("openDate", unit.getOpenDate().toString());
-
-        if (unit.getCloseDate() != null) {
-            model.addAttribute("closeDate", unit.getCloseDate().toString());
-        } else {
-            model.addAttribute("closeDate", "Still open.");
-        }
-
-        if (unit.getDescription() != null) {
-            model.addAttribute("description", unit.getDescription());
-        } else {
-            model.addAttribute("description", "Empty.");
-        }
+        model.addAttribute("unit", unit);
 
         return "unit-sheet-form";
     }
@@ -187,7 +175,25 @@ public class UnitController extends AbstractLetsDigController {
     public String unitSheet(
             Model model,
             HttpServletRequest request,
-            String description){
+            String description,
+            String level_1_type,
+            String level_1_description,
+            String level_1_value,
+            String level_2_type,
+            String level_2_description,
+            String level_2_value,
+            String level_3_type,
+            String level_3_description,
+            String level_3_value,
+            String level_4_type,
+            String level_4_description,
+            String level_4_value,
+            String level_5_type,
+            String level_5_description,
+            String level_5_value,
+            String level_6_type,
+            String level_6_description,
+            String level_6_value) {
 
         User user = getUserFromSession(request);
 
@@ -210,12 +216,24 @@ public class UnitController extends AbstractLetsDigController {
 
         model.addAttribute("project", project);
 
-        Unit unit = unitDao.findById((int) request.getSession().getAttribute(unitSessionKey));
+        Unit unit = unitDao.findById((int)request.getSession().getAttribute(unitSessionKey));
 
         if (unit == null) {
             model.addAttribute("message", "Error loading unit.");
             return "error";
         }
+
+        Datum datum;
+
+        try {
+            datum = getActiveDatum(request);
+        } catch (DatumAccessException e) {
+            e.printStackTrace();
+            model.addAttribute("message", e.getMessage());
+            return "error";
+        }
+
+        model.addAttribute("datum", datum);
 
         if (description != "") {
 
@@ -223,6 +241,66 @@ public class UnitController extends AbstractLetsDigController {
                 unit.setDescription(description);
             } else {
                 unit.setDescription(unit.getDescription() + " " + description);
+            }
+        }
+
+        if (level_1_type != null) {
+            if (level_1_type.equals("opening")) {
+                UnitLevel level_1 = unit.createLevel(Double.valueOf(level_1_value), level_1_description, UnitLevel.LevelType.OPENING, datum);
+                unitLevelDao.save(level_1);
+            } else if (level_1_type.equals("closing")) {
+                UnitLevel level_1 = unit.createLevel(Double.valueOf(level_1_value), level_1_description, UnitLevel.LevelType.CLOSING, datum);
+                unitLevelDao.save(level_1);
+            }
+        }
+
+        if (level_2_type != null) {
+            if (level_2_type.equals("opening")) {
+                UnitLevel level_2 = unit.createLevel(Double.valueOf(level_2_value), level_2_description, UnitLevel.LevelType.OPENING, datum);
+                unitLevelDao.save(level_2);
+            } else if (level_2_type.equals("closing")) {
+                UnitLevel level_2 = unit.createLevel(Double.valueOf(level_2_value), level_2_description, UnitLevel.LevelType.CLOSING, datum);
+                unitLevelDao.save(level_2);
+            }
+        }
+
+        if (level_3_type != null) {
+            if (level_3_type.equals("opening")) {
+                UnitLevel level_3 = unit.createLevel(Double.valueOf(level_3_value), level_3_description, UnitLevel.LevelType.OPENING, datum);
+                unitLevelDao.save(level_3);
+            } else if (level_3_type.equals("closing")) {
+                UnitLevel level_3 = unit.createLevel(Double.valueOf(level_3_value), level_3_description, UnitLevel.LevelType.CLOSING, datum);
+                unitLevelDao.save(level_3);
+            }
+        }
+
+        if (level_4_type != null) {
+            if (level_4_type.equals("opening")) {
+                UnitLevel level_4 = unit.createLevel(Double.valueOf(level_4_value), level_4_description, UnitLevel.LevelType.OPENING, datum);
+                unitLevelDao.save(level_4);
+            } else if (level_4_type.equals("closing")) {
+                UnitLevel level_4 = unit.createLevel(Double.valueOf(level_4_value), level_4_description, UnitLevel.LevelType.CLOSING, datum);
+                unitLevelDao.save(level_4);
+            }
+        }
+
+        if (level_5_type != null) {
+            if (level_5_type.equals("opening")) {
+                UnitLevel level_5 = unit.createLevel(Double.valueOf(level_5_value), level_5_description, UnitLevel.LevelType.OPENING, datum);
+                unitLevelDao.save(level_5);
+            } else if (level_5_type.equals("closing")) {
+                UnitLevel level_5 = unit.createLevel(Double.valueOf(level_5_value), level_5_description, UnitLevel.LevelType.CLOSING, datum);
+                unitLevelDao.save(level_5);
+            }
+        }
+
+        if (level_6_type != null) {
+            if (level_6_type.equals("opening")) {
+                UnitLevel level_6 = unit.createLevel(Double.valueOf(level_6_value), level_6_description, UnitLevel.LevelType.OPENING, datum);
+                unitLevelDao.save(level_6);
+            } else if (level_6_type.equals("closing")) {
+                UnitLevel level_6 = unit.createLevel(Double.valueOf(level_6_value), level_6_description, UnitLevel.LevelType.CLOSING, datum);
+                unitLevelDao.save(level_6);
             }
         }
 
@@ -283,7 +361,9 @@ public class UnitController extends AbstractLetsDigController {
             return "error";
         }
 
-        model.addAttribute("unitName", unit.gimmeName());
+        model.addAttribute("unit", unit);
+
+        model.addAttribute("unitName", unit.toString());
         model.addAttribute("openDate", unit.getOpenDate().toString());
 
         if (unit.getDescription() != null) {
@@ -308,27 +388,6 @@ public class UnitController extends AbstractLetsDigController {
             String unitId,
             Model model,
             HttpServletRequest request){
-
-        User user = getUserFromSession(request);
-
-        if (user == null) {
-            model.addAttribute("message", "Error loading user data.");
-            return "error";
-        }
-
-        model.addAttribute("user", user);
-
-        Project project;
-
-        try {
-            project = getActiveProject(request);
-
-        } catch (ProjectAccessException e) {
-            model.addAttribute("message", e.getMessage());
-            return "error";
-        }
-
-        model.addAttribute("project", project);
 
         Unit unit = unitDao.findById(Integer.valueOf(unitId));
 

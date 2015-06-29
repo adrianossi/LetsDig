@@ -24,10 +24,12 @@
                 <span id="header-wordmark-text"
                       th:text="${project}? 'LetsDig: ' + ${project.toString()} : 'LetsDig'">LetsDig</span></a>
             <ul class="project-menu" th:remove="${project}? none : all">
+                <li id="datum_ok" th:remove="${datum}? none : all"><a href="/datum">Datum OK</a></li>
+                <li id="no_datum" th:remove="${datum}? all : none"><a href="/datum">NO DATUM</a></li>
                 <li>Project menu:</li>
-                <li><a href="/project-summary">Overview</a> |</li>
+                <li><a href="/unloadproject">Unload</a> |</li>
                 <li><a href="/project-settings">Settings</a> |</li>
-                <li><a href="/unloadproject">Unload</a></li>
+                <li><a href="/project-summary">Overview</a></li>
             </ul>
         </div>
         <div id="header-right">

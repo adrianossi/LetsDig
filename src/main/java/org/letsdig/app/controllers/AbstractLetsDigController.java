@@ -4,7 +4,6 @@ import org.letsdig.app.models.*;
 import org.letsdig.app.models.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,9 +37,6 @@ public abstract class AbstractLetsDigController {
     @Autowired
     protected DatumDao datumDao;
 
-//    @Autowired
-  //  protected UnitDao unitDao;
-
     // static properties for error display
     private static final String errorTemplateIdentifier = "error";
     private static final String errorMessageIdentifier = "message";
@@ -49,6 +45,7 @@ public abstract class AbstractLetsDigController {
     public static final String userSessionKey = "user_id";
     public static final String projectSessionKey = "project_id";
     public static final String unitSessionKey = "unit_id";
+    public static final String datumSessionKey = "datum_id";
 
     // method for any given controller in the app to display an error
     public String displayError(String message, Model model) {
@@ -56,6 +53,7 @@ public abstract class AbstractLetsDigController {
         return errorTemplateIdentifier;
     }
 
+    //TODO combine all of these access methods by passing in the appropriate session key
     /**
      *     METHODS ON --USER-- IN SESSION
      */
@@ -101,6 +99,39 @@ public abstract class AbstractLetsDigController {
         }
 
         return project;
+    }
+
+    /**
+     *          METHODS ON --DATUM-- IN SESSION
+     */
+
+    // method to check if a datum is active
+    public static boolean aDatumIsActive(HttpServletRequest request) {
+        return request.getSession().getAttribute(datumSessionKey) != null;
+    }
+
+    // method for any controller to get the current datum id
+    public static int getDatumIdFromSession(HttpServletRequest request) {
+        return (int)request.getSession().getAttribute(datumSessionKey);
+    }
+
+    // method for any controller to get the active Datum object
+    public Datum getActiveDatum(HttpServletRequest request) throws DatumAccessException {
+
+        // check if a project is active
+        if (!aDatumIsActive(request)) {
+            throw new DatumAccessException("No active datum found.");
+        }
+
+        // get the active project from the db
+        Datum datum = datumDao.findById(getDatumIdFromSession(request));
+
+        // validate project
+        if (datum == null) {
+            throw new DatumAccessException("Error loading datum.");
+        }
+
+        return datum;
     }
 
     /**

@@ -27,6 +27,20 @@ public class UnitLevel extends Level {
     private Datum datum;
     private Unit unit;
 
+    public UnitLevel(){}
+
+    public UnitLevel(double value,
+                     String description,
+                     LevelType type,
+                     Datum datum,
+                     Unit unit) {
+
+        super(value, description);
+        this.type = type;
+        this.datum = datum;
+        this.unit = unit;
+    }
+
     @Column(name = "type")
     public LevelType getType() {
         return type;

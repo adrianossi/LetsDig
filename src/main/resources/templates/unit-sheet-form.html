@@ -8,11 +8,105 @@
     <header th:replace="template :: header-foyer"></header>
 
     <main>
-        <p>Unit: <span th:text="${unitName}">unit name</span></p>
-        <p>Open date: <span th:text="${openDate}">open date</span></p>
-        <p>Close date: <span th:text="${closeDate}">close date</span></p>
+        <p>Unit: <span th:text="${unit.toString()}">unit name</span></p>
+        <p>Open date: <span th:text="${unit.gimmeFormattedOpenDate()}">open date</span></p>
+        <p>Close date: <span th:text="${unit.getCloseDate()}? ${unit.gimmeFormattedCloseDate} : 'Still open.'">close date</span></p>
+        <p>Existing levels:</p>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Value (mbd)</th>
+                <th>Value (masl)</th>
+                <th>Date</th>
+            </tr>
+            <tr th:if="${#lists.isEmpty(unit.getLevels())}">
+                <td>None.</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(unit.getLevels())}"
+                th:each="level : ${unit.getLevels()}">
+                <td th:text="${level.getType()}"></td>
+                <td th:text="${level.getDescription()}"></td>
+                <td th:text="${level.getValue()}"></td>
+                <td th:text="${level.masl()}"></td>
+                <td th:text="${level.gimmeFormattedDateStamp()}"></td>
+            </tr>
+        </table>
         <form action="/unit-sheet-edit" id="unit-sheet-form" method="post">
             <fieldset>
+                <p>Add levels:</p>
+                <table>
+                    <tr>
+                        <td>
+                            <select name="level_1_type">
+                                <option disabled="disabled" selected="selected">Select type</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                            </select>
+                        </td>
+                        <td><input name="level_1_description" type="text" placeholder="Description"/></td>
+                        <td><input name="level_1_value" type="number" step="0.001" placeholder="Meters below datum"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="level_2_type">
+                                <option disabled="disabled" selected="selected">Select type</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                            </select>
+                        </td>
+                        <td><input name="level_2_description" type="text" placeholder="Description"/></td>
+                        <td><input name="level_2_value" type="number" step="0.001" placeholder="Meters below datum"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="level_3_type">
+                                <option disabled="disabled" selected="selected">Select type</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                            </select>
+                        </td>
+                        <td><input name="level_3_description" type="text" placeholder="Description"/></td>
+                        <td><input name="level_3_value" type="number" step="0.001" placeholder="Meters below datum"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="level_4_type">
+                                <option disabled="disabled" selected="selected">Select type</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                            </select>
+                        </td>
+                        <td><input name="level_4_description" type="text" placeholder="Description"/></td>
+                        <td><input name="level_4_value" type="number" step="0.001" placeholder="Meters below datum"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="level_5_type">
+                                <option disabled="disabled" selected="selected">Select type</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                            </select>
+                        </td>
+                        <td><input name="level_5_description" type="text" placeholder="Description"/></td>
+                        <td><input name="level_5_value" type="number" step="0.001" placeholder="Meters below datum"/></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="level_6_type">
+                                <option disabled="disabled" selected="selected">Select type</option>
+                                <option value="opening">Opening</option>
+                                <option value="closing">Closing</option>
+                            </select>
+                        </td>
+                        <td><input name="level_6_description" type="text" placeholder="Description"/></td>
+                        <td><input name="level_6_value" type="number" step="0.001" placeholder="Meters below datum"/></td>
+                    </tr>
+                </table>
                 <p>Description: <span th:text="${description}">description</span></p>
                 <textarea form="unit-sheet-form"
                           name="description"

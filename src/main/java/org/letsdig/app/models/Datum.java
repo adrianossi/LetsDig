@@ -15,6 +15,7 @@ import java.util.List;
 @Table(name="datums")
 public class Datum extends Level {
 
+    // TODO Datum should probably have a Project property too...
     private List<UnitLevel> unitLevels;
 
     public Datum() {}

@@ -97,7 +97,7 @@ public class Square extends AbstractLetsDigEntity {
 
     @Override
     public String toString() {
-        return this.columnNumber + "," + this.rowNumber;
+        return this.columnNumber + "." + this.rowNumber;
     }
 
     public List<Unit> gimmeOpenUnits() {

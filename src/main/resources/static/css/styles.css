@@ -253,3 +253,39 @@ th, td {
     padding: .25em;
     padding-right: 1em;
 }
+
+#no_datum, #datum_ok {
+    color: white;
+    padding: .5em
+}
+
+#no_datum a, #datum_ok a {
+    color: white;
+    text-decoration: none;
+}
+
+#no_datum a:visited, #datum_ok a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+#no_datum a:hover, #datum_ok a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+#no_datum {
+    background-color: red;
+}
+
+#datum_ok {
+    background-color: green;
+}
+
+#no_datum:hover {
+    background-color: pink;
+}
+
+#datum_ok:hover {
+    background-color: lightgreen;
+}
