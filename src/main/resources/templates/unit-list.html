@@ -22,7 +22,7 @@
                 <span th:text="${unit.gimmeFormattedOpenDate()}"></span>
             </td>
             <td>
-                <span th:text="*{unit.gimmeFormattedCloseDate()}?: 'Still open'"></span>
+                <span th:text="${unit.gimmeFormattedCloseDate()}?: 'Still open'"></span>
             </td>
         </tr>
     </table>

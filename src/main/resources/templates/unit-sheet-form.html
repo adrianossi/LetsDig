@@ -10,7 +10,7 @@
     <main>
         <p>Unit: <span th:text="${unit.toString()}">unit name</span></p>
         <p>Open date: <span th:text="${unit.gimmeFormattedOpenDate()}">open date</span></p>
-        <p>Close date: <span th:text="${unit.getCloseDate()}? ${unit.gimmeFormattedCloseDate} : 'Still open.'">close date</span></p>
+        <p>Close date: <span th:text="${unit.gimmeFormattedCloseDate()}?: 'Still open'">close date</span></p>
         <p>Existing levels:</p>
         <table>
             <tr>
